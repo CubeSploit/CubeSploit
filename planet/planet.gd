@@ -18,12 +18,13 @@ const FACES = {
 
 func _ready():
 	var r = 10
-	var offset = Vector3(1800,0,0)
+	var offset = Vector3(10800,0,0)
+	set_translation(get_translation() + offset);
 	get_node("../Camera").set_translation(get_node("../Camera").get_translation() + offset)
 	for x in range(0,r):
 		for y in range(0,r):
 			for z in range(0,r):
-				set_voxel(Vector3(x,y,z) + offset, 1)
+				set_voxel(Vector3(x,y,z), 1)
 	
 	set_process_input(true)
 

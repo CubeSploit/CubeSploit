@@ -2,12 +2,12 @@
 
 [ext_resource path="res://planet/planet.gd" type="Script" id=1]
 
-[sub_resource type="MaterialShaderGraph" id=3]
+[sub_resource type="MaterialShaderGraph" id=1]
 
 _code = { "fragment":"vec3 IN_NORMAL=NORMAL;\nvec3 nd1sl2=IN_NORMAL;\nvec3 DIFFUSE_OUT=vec3(0,0,0);\nfloat ALPHA_OUT=0;\nDIFFUSE_OUT=nd1sl2;\nDIFFUSE=DIFFUSE_OUT;\n", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
 _data = { "shaders":[ [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ], [ 0, 33, Vector2( 350, 40 ), null, null, [ 0, 1, 2 ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ], [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ] ] }
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=2]
 
 flags/visible = true
 flags/double_sided = false
@@ -19,7 +19,7 @@ flags/colarray_is_srgb = false
 params/blend_mode = 0
 params/depth_draw = 1
 params/line_width = 0.0
-shader/shader = SubResource( 3 )
+shader/shader = SubResource( 1 )
 
 [node name="World" type="Spatial"]
 
@@ -30,7 +30,7 @@ _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 layers = 1
 geometry/visible = true
-geometry/material_override = SubResource( 4 )
+geometry/material_override = SubResource( 2 )
 geometry/cast_shadow = 1
 geometry/receive_shadows = true
 geometry/range_begin = 0.0
