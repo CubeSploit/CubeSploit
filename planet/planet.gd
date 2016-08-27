@@ -18,8 +18,8 @@ const FACES = {
 
 func _ready():
 	var r = 10
-	var offset = Vector3(1800,0,0)
-	get_node("../Camera").set_translation(get_node("../Camera").get_translation() + offset)
+	var offset = Vector3(0,0,0)
+	
 	for x in range(0,r):
 		for y in range(0,r):
 			for z in range(0,r):
@@ -28,8 +28,9 @@ func _ready():
 	set_process_input(true)
 
 func _input(event):
-	if event.type == InputEvent.KEY && !event.is_echo() && event.is_pressed():
-		get_material_override().set_flag(Material.FLAG_INVERT_FACES, !get_material_override().get_flag(Material.FLAG_INVERT_FACES))
+#	if event.type == InputEvent.KEY && !event.is_echo() && event.is_pressed():
+#		get_material_override().set_flag(Material.FLAG_INVERT_FACES, !get_material_override().get_flag(Material.FLAG_INVERT_FACES))
+	pass
 
 func set_voxel(_position, type):
 	var position = _position.snapped(1)
