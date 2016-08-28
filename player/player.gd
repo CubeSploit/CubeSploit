@@ -45,10 +45,8 @@ func _fixed_process(delta):
 		velocity.y = 0
 
 #	We want the player to move forward and backward to/from where it is looking at
-#	It works but don't ask me why
-#	it's more or less about the fact that we rotate the velocity vector first according to camera's basis
-#	then according to player's basis
-	move(Quat(get_transform().basis).xform(Quat(camera.get_transform().basis).xform(velocity)))
+#	Don't ask me why this does the work.
+	move(get_transform().basis * camera.get_transform().basis * velocity )
 
 	
 	
