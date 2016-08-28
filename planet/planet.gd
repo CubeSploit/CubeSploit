@@ -10,6 +10,12 @@ var voxel_colors = {
 	3: Color(0,0,1),
 }
 
+export(Material) var blue_material
+export(Material) var green_material
+export(Material) var red_material
+
+var voxel_materials
+
 const FACES = {
 	Vector3(0,0,1): [Vector3(1,1,1), Vector3(1,0,1), Vector3(0,0,1), Vector3(0,1,1)],
 	Vector3(0,0,-1): [Vector3(1,1,0), Vector3(0,1,0), Vector3(0,0,0), Vector3(1,0,0)],
@@ -20,6 +26,11 @@ const FACES = {
 }
 
 func _ready():
+	voxel_materials = {
+		1: blue_material,
+		2: green_material,
+		3: red_material
+	}
 	
 	var r = 10
 	var offset = Vector3(0,0,0)
@@ -53,10 +64,11 @@ func draw():
 	for type in voxel_colors:
 		var material = FixedMaterial.new()
 		var st = SurfaceTool.new()
-		material.set_parameter(material.PARAM_DIFFUSE, voxel_colors[type])
-		material.set_parameter(material.PARAM_SPECULAR, Color(1,1,1))
-		material.set_flag(material.FLAG_DOUBLE_SIDED, true)
-		st.set_material(material)
+#		material.set_parameter(material.PARAM_DIFFUSE, voxel_colors[type])
+#		material.set_texture(material.PARAM_DIFFUSE, voxel_textures[type])
+#		material.set_parameter(material.PARAM_SPECULAR, Color(1,1,1))
+#		material.set_flag(material.FLAG_DOUBLE_SIDED, true)
+		st.set_material(voxel_materials[type])
 		st.begin(VisualServer.PRIMITIVE_TRIANGLES)
 		tools[type] = st
 		tools_indices[type] = 0
