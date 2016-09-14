@@ -1,10 +1,10 @@
 extends Node
 
-var scenes = {
+const scenes = {
 	body= preload("res://world/body/body.tscn")
 }
 
-var classes = {
+const classes = {
 	chunk= preload("res://world/body/chunk.gd"),
 	quad= preload("res://world/body/quad.gd")
 }
@@ -28,7 +28,7 @@ const voxel_types = {
 	red = 3,
 	count = 4
 }
-var voxel_textures = [
+const voxel_textures = [
 	null,
 	preload("res://world/voxel/blue.png"),
 	preload("res://world/voxel/green.png"),
