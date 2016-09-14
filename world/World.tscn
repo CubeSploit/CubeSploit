@@ -1,12 +1,9 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://planet/planet.gd" type="Script" id=1]
-[ext_resource path="res://planet/blue.png" type="Texture" id=2]
-[ext_resource path="res://planet/green.png" type="Texture" id=3]
-[ext_resource path="res://planet/red.png" type="Texture" id=4]
-[ext_resource path="res://player/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://world/world.gd" type="Script" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 
-[sub_resource type="Environment" id=4]
+[sub_resource type="Environment" id=1]
 
 ambient_light/enabled = true
 ambient_light/color = Color( 1, 1, 1, 1 )
@@ -50,155 +47,15 @@ bcs/contrast = 1.0
 bcs/saturation = 1.0
 srgb/enabled = false
 
-[sub_resource type="FixedMaterial" id=1]
-
-flags/visible = true
-flags/double_sided = true
-flags/invert_faces = false
-flags/unshaded = false
-flags/on_top = false
-flags/lightmap_on_uv2 = true
-flags/colarray_is_srgb = true
-params/blend_mode = 0
-params/depth_draw = 1
-params/line_width = 3.22299e-44
-fixed_flags/use_alpha = false
-fixed_flags/use_color_array = false
-fixed_flags/use_point_size = false
-fixed_flags/discard_alpha = false
-fixed_flags/use_xy_normalmap = false
-params/diffuse = Color( 1, 1, 1, 1 )
-params/specular = Color( 1, 1, 1, 1 )
-params/emission = Color( 0, 0, 0, 1 )
-params/specular_exp = 40.0
-params/detail_mix = 1.0
-params/normal_depth = 1
-params/shader = 0
-params/shader_param = 0.5
-params/glow = 0
-params/point_size = 1.0
-uv_xform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-textures/diffuse = ExtResource( 2 )
-textures/diffuse_tc = 0
-textures/detail_tc = 0
-textures/specular = ExtResource( 2 )
-textures/specular_tc = 0
-textures/emission_tc = 0
-textures/specular_exp_tc = 0
-textures/glow_tc = 0
-textures/normal_tc = 0
-textures/shade_param_tc = 0
-
-[sub_resource type="FixedMaterial" id=2]
-
-flags/visible = true
-flags/double_sided = true
-flags/invert_faces = false
-flags/unshaded = false
-flags/on_top = false
-flags/lightmap_on_uv2 = true
-flags/colarray_is_srgb = true
-params/blend_mode = 0
-params/depth_draw = 1
-params/line_width = 3.22299e-44
-fixed_flags/use_alpha = false
-fixed_flags/use_color_array = false
-fixed_flags/use_point_size = false
-fixed_flags/discard_alpha = false
-fixed_flags/use_xy_normalmap = false
-params/diffuse = Color( 1, 1, 1, 1 )
-params/specular = Color( 1, 1, 1, 1 )
-params/emission = Color( 0, 0, 0, 1 )
-params/specular_exp = 40
-params/detail_mix = 1.0
-params/normal_depth = 1
-params/shader = 0
-params/shader_param = 0.5
-params/glow = 0
-params/point_size = 1.0
-uv_xform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-textures/diffuse = ExtResource( 3 )
-textures/diffuse_tc = 0
-textures/detail_tc = 0
-textures/specular = ExtResource( 3 )
-textures/specular_tc = 0
-textures/emission_tc = 0
-textures/specular_exp_tc = 0
-textures/glow_tc = 0
-textures/normal_tc = 0
-textures/shade_param_tc = 0
-
-[sub_resource type="FixedMaterial" id=3]
-
-flags/visible = true
-flags/double_sided = true
-flags/invert_faces = false
-flags/unshaded = false
-flags/on_top = false
-flags/lightmap_on_uv2 = true
-flags/colarray_is_srgb = true
-params/blend_mode = 0
-params/depth_draw = 1
-params/line_width = 1.15701e+27
-fixed_flags/use_alpha = false
-fixed_flags/use_color_array = false
-fixed_flags/use_point_size = false
-fixed_flags/discard_alpha = false
-fixed_flags/use_xy_normalmap = false
-params/diffuse = Color( 1, 1, 1, 1 )
-params/specular = Color( 1, 1, 1, 1 )
-params/emission = Color( 0, 0, 0, 1 )
-params/specular_exp = 40
-params/detail_mix = 1.0
-params/normal_depth = 1
-params/shader = 0
-params/shader_param = 0.5
-params/glow = 0
-params/point_size = 1.0
-uv_xform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-textures/diffuse = ExtResource( 4 )
-textures/diffuse_tc = 0
-textures/detail_tc = 0
-textures/specular = ExtResource( 4 )
-textures/specular_tc = 0
-textures/emission_tc = 0
-textures/specular_exp_tc = 0
-textures/glow_tc = 0
-textures/normal_tc = 0
-textures/shade_param_tc = 0
-
 [node name="World" type="Spatial"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+script/script = ExtResource( 1 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-environment = SubResource( 4 )
-
-[node name="Planet" type="MeshInstance" parent="."]
-
-_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-layers = 1
-geometry/visible = true
-geometry/material_override = null
-geometry/cast_shadow = 1
-geometry/receive_shadows = true
-geometry/range_begin = 0.0
-geometry/range_end = 0.0
-geometry/extra_cull_margin = 0.0
-geometry/billboard = false
-geometry/billboard_y = false
-geometry/depth_scale = false
-geometry/visible_in_all_rooms = false
-geometry/use_baked_light = false
-geometry/baked_light_tex_id = 0
-mesh/mesh = null
-mesh/skeleton = NodePath("..")
-script/script = ExtResource( 1 )
-blue_material = SubResource( 1 )
-green_material = SubResource( 2 )
-red_material = SubResource( 3 )
+environment = SubResource( 1 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 
@@ -224,7 +81,7 @@ shadow/max_distance = 0.0
 shadow/split_weight = 0.5
 shadow/zoffset_scale = 2.0
 
-[node name="Player" parent="." instance=ExtResource( 5 )]
+[node name="Player" parent="." instance=ExtResource( 2 )]
 
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
 

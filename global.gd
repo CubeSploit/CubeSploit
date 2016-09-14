@@ -1,6 +1,13 @@
 extends Node
 
+var scenes = {
+	body= load("res://world/body/body.tscn")
+}
 
+var classes = {
+	chunk= load("res://world/body/chunk.gd"),
+	quad= load("res://world/body/quad.gd")
+}
 
 const faces = {
 	front = 0,
