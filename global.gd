@@ -28,12 +28,6 @@ const Voxel_Types = {
 	RED = 3,
 	COUNT = 4
 }
-const voxel_textures = [
-	null,
-	preload("res://world/voxel/blue.png"),
-	preload("res://world/voxel/green.png"),
-	preload("res://world/voxel/red.png")
-]
 
 func _ready():
 	pass
