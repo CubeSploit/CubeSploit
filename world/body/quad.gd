@@ -33,7 +33,7 @@ func _init( type, pos, face, x, y, w, h ):
 	self.w = w
 	self.h = h
 
-func add_to_surface(st, idx):
+func add_to_surface(st, idx, origin):
 	var uv_start = float(type-1)/(global.Voxel_Types.COUNT-1)
 	var uv_stop = float(type)/(global.Voxel_Types.COUNT-1)
 
@@ -48,13 +48,13 @@ func add_to_surface(st, idx):
 	st.add_normal(quads_normals[face])
 	st.add_uv( Vector2(0,0) )
 	st.add_color( Color(0,uv_start,1-0,uv_stop-uv_start) )
-	st.add_vertex(quads_vertices[face][0] * v3_mult + pos)
+	st.add_vertex(sphericize(quads_vertices[face][0] * v3_mult + pos, origin))
 	st.add_uv( Vector2(0,h) )
-	st.add_vertex(quads_vertices[face][1] * v3_mult + pos)
+	st.add_vertex(sphericize(quads_vertices[face][1] * v3_mult + pos, origin))
 	st.add_uv( Vector2(w,h) )
-	st.add_vertex(quads_vertices[face][2] * v3_mult + pos)
+	st.add_vertex(sphericize(quads_vertices[face][2] * v3_mult + pos, origin))
 	st.add_uv( Vector2(w,0) )
-	st.add_vertex(quads_vertices[face][3] * v3_mult + pos)
+	st.add_vertex(sphericize(quads_vertices[face][3] * v3_mult + pos, origin))
 
 	st.add_index(idx + 0)
 	st.add_index(idx + 1)
@@ -65,3 +65,8 @@ func add_to_surface(st, idx):
 	idx += 4
 
 	return idx
+
+func sphericize(pos, origin):
+	pos -= origin
+	var max_length = max(abs(pos.x), max(abs(pos.y), abs(pos.z)))
+	return pos.normalized() * max_length + origin

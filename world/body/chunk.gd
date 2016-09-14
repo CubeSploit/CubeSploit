@@ -1,8 +1,7 @@
 extends MeshInstance
 
-var pos = Vector3(0,0,0)
 var size = 32
-var raw_data = [] # sixe * sixe 2D array
+var raw_data = [] # size * size * size 3D array
 var body = null # ref of the parent node
 
 func _init(body, size):
@@ -19,7 +18,10 @@ func generate_random( ):
 			raw_data[x][y] = []
 			raw_data[x][y].resize(size)
 			for z in range(size):
-				raw_data[x][y][z] = (randi()%(global.Voxel_Types.COUNT-1))+1
+				if randf() > 0:
+					raw_data[x][y][z] = (randi()%(global.Voxel_Types.COUNT-1))+1
+				else:
+					raw_data[x][y][z] = 0
 #				raw_data[x][y][z] = randi()%global.Voxel_Types.COUNT
 #				raw_data[x][y][z] = 1
 
@@ -89,7 +91,7 @@ func generate_mesh( voxel_material ):
 		# for each quads in the list of quads to display
 		for quad in to_display_quads:
 			# add quad to surface tool
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx, -get_translation()+Vector3(size,size,size)/2)
 
 	# back
 	for z in range(size):
@@ -100,7 +102,7 @@ func generate_mesh( voxel_material ):
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx, -get_translation()+Vector3(size,size,size)/2)
 
 	# right
 	for x in range(size):
@@ -111,7 +113,7 @@ func generate_mesh( voxel_material ):
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx, -get_translation()+Vector3(size,size,size)/2)
 
 	# left
 	for x in range(size):
@@ -122,7 +124,7 @@ func generate_mesh( voxel_material ):
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx, -get_translation()+Vector3(size,size,size)/2)
 
 	# top
 	for y in range(size):
@@ -133,7 +135,7 @@ func generate_mesh( voxel_material ):
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx, -get_translation()+Vector3(size,size,size)/2)
 			
 	# top
 	for y in range(size):
@@ -144,9 +146,10 @@ func generate_mesh( voxel_material ):
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx, -get_translation()+Vector3(size,size,size)/2)
 
 	# commit the mesh
+	st.generate_normals()
 	set_mesh(st.commit())
 
 
@@ -177,6 +180,7 @@ func greedy_mesh( quads ):
 			x_offset = 1
 			# while horizontal end is not reached and there is a neighbour slot to the right with a quad of the same type
 			while( x+x_offset < size && quads[x+x_offset][y] && quads[x+x_offset][y].type == quad.type ):
+				break
 				# remove that neighbour quad and increase the current quad's width
 				quads[x+x_offset][y] = null
 				quad.w += 1
@@ -191,6 +195,7 @@ func greedy_mesh( quads ):
 			keep_scanning_rows = true
 			# while vertical end is not reached and we're allowed to keep scanning neighbours of the row bellow, meaning the current quad was extended to the bottom during previous loop
 			while( y+y_offset < size && keep_scanning_rows  ):
+				break
 				# this boolean will determine if all slot of the row bellow our current quad contains quads of the same type
 				full_row = true
 				# for each slot of the row bellow the current quad
