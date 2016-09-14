@@ -46,13 +46,14 @@ func add_to_surface(st, idx):
 		v3_mult = Vector3(w, 1, h)
 
 	st.add_normal(quads_normals[face])
-	st.add_uv( Vector2(0, uv_start ) )
+	st.add_uv( Vector2(0,0) )
+	st.add_color( Color(0,uv_start,1-0,uv_stop-uv_start) )
 	st.add_vertex(quads_vertices[face][0] * v3_mult + pos)
-	st.add_uv( Vector2(0, uv_stop ) )
+	st.add_uv( Vector2(0,h) )
 	st.add_vertex(quads_vertices[face][1] * v3_mult + pos)
-	st.add_uv( Vector2(1, uv_stop ) )
+	st.add_uv( Vector2(w,h) )
 	st.add_vertex(quads_vertices[face][2] * v3_mult + pos)
-	st.add_uv( Vector2(1, uv_start ) )
+	st.add_uv( Vector2(w,0) )
 	st.add_vertex(quads_vertices[face][3] * v3_mult + pos)
 
 	st.add_index(idx + 0)
