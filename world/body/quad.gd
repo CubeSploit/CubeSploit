@@ -35,7 +35,7 @@ func _init( type, pos, face, x, y, w, h ):
 
 func add_to_surface(st, idx):
 	var uv_start = float(type-1)/(global.Voxel_Types.COUNT-1)
-	var uv_stop = float(type)/(global.Voxel_Types.COUNT-1)
+	var uv_delta = 1.0/(global.Voxel_Types.COUNT-1)
 
 	var v3_mult = Vector3(1,1,1)
 	if( face == global.Faces.FRONT || face == global.Faces.BACK ):
@@ -47,7 +47,7 @@ func add_to_surface(st, idx):
 
 	st.add_normal(quads_normals[face])
 	st.add_uv( Vector2(0,0) )
-	st.add_color( Color(0,uv_start,1-0,uv_stop-uv_start) )
+	st.add_color( Color(0,uv_start,1, uv_delta) )
 	st.add_vertex(quads_vertices[face][0] * v3_mult + pos)
 	st.add_uv( Vector2(0,h) )
 	st.add_vertex(quads_vertices[face][1] * v3_mult + pos)
