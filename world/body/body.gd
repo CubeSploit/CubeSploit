@@ -3,7 +3,7 @@ extends Spatial
 export(Material) var voxel_material
 
 var chunk_size = 32
-var chunks
+var chunks = [] # 3D array containing the chunks of the body
 
 
 func _ready():

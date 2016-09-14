@@ -1,11 +1,11 @@
 
-var type
-var pos
-var face
-var x
-var y
-var w
-var h
+var type = global.Voxel_Types.EMPTY
+var pos = Vector3(0,0,0)
+var face = global.Faces.FRONT
+var x = 0
+var y = 0
+var w = 1
+var h = 1
 
 const quads_vertices = [
 	[Vector3(0,0,1), Vector3(0,1,1), Vector3(1,1,1), Vector3(1,0,1)], # front

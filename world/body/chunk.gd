@@ -1,10 +1,9 @@
 extends MeshInstance
 
-var pos
-var size
-var raw_data
-var body
-var mesh_instance
+var pos = Vector3(0,0,0)
+var size = 32
+var raw_data = [] # sixe * sixe 2D array
+var body = null # ref of the parent node
 
 func _init(body, size):
 	self.body = body
@@ -147,7 +146,7 @@ func generate_mesh( voxel_material ):
 		for quad in to_display_quads:
 			idx = quad.add_to_surface(st, idx);
 
-	# commit the mesh and set it in the mesh instance
+	# commit the mesh
 	set_mesh(st.commit())
 
 
