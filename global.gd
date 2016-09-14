@@ -9,24 +9,24 @@ const classes = {
 	quad= preload("res://world/body/quad.gd")
 }
 
-const faces = {
-	front = 0,
-	back = 1,
-	right = 2,
-	left = 3,
-	top = 4,
-	bottom = 5,
-	count = 6
+const Faces = {
+	FRONT = 0,
+	BACK = 1,
+	RIGHT = 2,
+	LEFT = 3,
+	TOP = 4,
+	BOTTOM = 5,
+	COUNT = 6
 }
 
 
 
-const voxel_types = {
-	empty = 0,
-	blue = 1,
-	green = 2,
-	red = 3,
-	count = 4
+const Voxel_Types = {
+	EMPTY = 0,
+	BLUE = 1,
+	GREEN = 2,
+	RED = 3,
+	COUNT = 4
 }
 const voxel_textures = [
 	null,

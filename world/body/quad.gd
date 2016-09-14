@@ -34,15 +34,15 @@ func _init( type, pos, face, x, y, w, h ):
 	self.h = h
 
 func add_to_surface(st, idx):
-	var uv_start = float(type-1)/(global.voxel_types.count-1)
-	var uv_stop = float(type)/(global.voxel_types.count-1)
+	var uv_start = float(type-1)/(global.Voxel_Types.COUNT-1)
+	var uv_stop = float(type)/(global.Voxel_Types.COUNT-1)
 
 	var v3_mult = Vector3(1,1,1)
-	if( face == global.faces.front || face == global.faces.back ):
+	if( face == global.Faces.FRONT || face == global.Faces.BACK ):
 		v3_mult = Vector3(w, h, 1)
-	if( face == global.faces.right || face == global.faces.left ):
+	if( face == global.Faces.RIGHT || face == global.Faces.LEFT ):
 		v3_mult = Vector3(1, h, w)
-	if( face == global.faces.top || face == global.faces.bottom ):
+	if( face == global.Faces.TOP || face == global.Faces.BOTTOM ):
 		v3_mult = Vector3(w, 1, h)
 
 	st.add_normal(quads_normals[face])

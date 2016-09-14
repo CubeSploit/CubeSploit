@@ -23,27 +23,27 @@ func generate_random( ):
 			raw_data[x][y] = []
 			raw_data[x][y].resize(size)
 			for z in range(size):
-				raw_data[x][y][z] = (randi()%(global.voxel_types.count-1))+1
-#				raw_data[x][y][z] = randi()%global.voxel_types.count
+				raw_data[x][y][z] = (randi()%(global.Voxel_Types.COUNT-1))+1
+#				raw_data[x][y][z] = randi()%global.Voxel_Types.COUNT
 #				raw_data[x][y][z] = 1
 
 
 func get_neighbour_voxel(current_voxel, direction):
 	var neighbour_voxel = Vector3(current_voxel)
 
-	if( direction == global.faces.front ):
+	if( direction == global.Faces.FRONT ):
 		neighbour_voxel.z +=1
-	elif( direction == global.faces.back ):
+	elif( direction == global.Faces.BACK ):
 		neighbour_voxel.z -=1
 
-	elif( direction == global.faces.right ):
+	elif( direction == global.Faces.RIGHT ):
 		neighbour_voxel.x +=1
-	elif( direction == global.faces.left ):
+	elif( direction == global.Faces.LEFT ):
 		neighbour_voxel.x -=1
 
-	elif( direction == global.faces.top ):
+	elif( direction == global.Faces.TOP):
 		neighbour_voxel.y +=1
-	elif( direction == global.faces.bottom ):
+	elif( direction == global.Faces.BOTTOM ):
 		neighbour_voxel.y -=1
 
 	return neighbour_voxel
@@ -51,7 +51,7 @@ func get_neighbour_voxel(current_voxel, direction):
 func get_neighbour_voxel_type ( current_voxel, direction ):
 	var neighbour_voxel = get_neighbour_voxel( current_voxel, direction )
 	if( neighbour_voxel[neighbour_voxel.min_axis()] < 0 || neighbour_voxel[neighbour_voxel.max_axis()] >= size ):
-		return global.voxel_types.empty
+		return global.Voxel_Types.EMPTY
 		
 	return raw_data[neighbour_voxel.x][neighbour_voxel.y][neighbour_voxel.z]
 	
@@ -85,9 +85,9 @@ func generate_mesh( voxel_material ):
 		for x in range(size):
 			for y in range(size):
 				# if the slot isn't empty and the neighbour slot in front of it isn't full
-				if( raw_data[x][y][z] != global.voxel_types.empty && get_neighbour_voxel_type(Vector3(x,y,z), global.faces.front) == global.voxel_types.empty ):
+				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.Voxel_Types.EMPTY ):
 					# register the quad
-					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z),global.faces.front, x, y, 1, 1)
+					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
 		# optimize the quads with greedy meshing
 		to_display_quads = greedy_mesh(quads)
 		# for each quads in the list of quads to display
@@ -99,8 +99,8 @@ func generate_mesh( voxel_material ):
 	for z in range(size):
 		for x in range(size):
 			for y in range(size):
-				if( raw_data[x][y][z] != global.voxel_types.empty && get_neighbour_voxel_type(Vector3(x,y,z), global.faces.back) == global.voxel_types.empty ):
-					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.faces.back, x, y, 1, 1)
+				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.Voxel_Types.EMPTY ):
+					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
@@ -110,8 +110,8 @@ func generate_mesh( voxel_material ):
 	for x in range(size):
 		for z in range(size):
 			for y in range(size):
-				if( raw_data[x][y][z] != global.voxel_types.empty && get_neighbour_voxel_type(Vector3(x,y,z), global.faces.right) == global.voxel_types.empty ):
-					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.faces.right, z, y, 1, 1)
+				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.Voxel_Types.EMPTY ):
+					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
@@ -121,8 +121,8 @@ func generate_mesh( voxel_material ):
 	for x in range(size):
 		for z in range(size):
 			for y in range(size):
-				if( raw_data[x][y][z] != global.voxel_types.empty && get_neighbour_voxel_type(Vector3(x,y,z), global.faces.left) == global.voxel_types.empty ):
-					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.faces.left, z, y, 1, 1)
+				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.Voxel_Types.EMPTY ):
+					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
@@ -132,8 +132,8 @@ func generate_mesh( voxel_material ):
 	for y in range(size):
 		for x in range(size):
 			for z in range(size):
-				if( raw_data[x][y][z] != global.voxel_types.empty && get_neighbour_voxel_type(Vector3(x,y,z), global.faces.top) == global.voxel_types.empty ):
-					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.faces.top, x, z, 1, 1)
+				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.Voxel_Types.EMPTY ):
+					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
@@ -143,8 +143,8 @@ func generate_mesh( voxel_material ):
 	for y in range(size):
 		for x in range(size):
 			for z in range(size):
-				if( raw_data[x][y][z] != global.voxel_types.empty && get_neighbour_voxel_type(Vector3(x,y,z), global.faces.bottom) == global.voxel_types.empty ):
-					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.faces.bottom, x, z, 1, 1)
+				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.Voxel_Types.EMPTY ):
+					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
