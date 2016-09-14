@@ -14,6 +14,7 @@ func _ready():
 func generate_random( size ):
 	var chunk_count_per_direction = ceil( float(size) / chunk_size )
 
+	var chunk
 	chunks = []
 	chunks.resize( chunk_count_per_direction )
 	for x in range(chunk_count_per_direction):
@@ -23,9 +24,12 @@ func generate_random( size ):
 			chunks[x][y] = []
 			chunks[x][y].resize(chunk_count_per_direction)
 			for z in range(chunk_count_per_direction):
-				chunks[x][y][z] = global.classes.chunk.new( self, Vector3(x,y,z)*chunk_size, chunk_size )
-				chunks[x][y][z].generate_random()
-				chunks[x][y][z].generate_mesh(voxel_material)
+				chunk = global.classes.chunk.new( self, chunk_size )
+				add_child(chunk)
+				chunk.set_translation(Vector3(x,y,z)*chunk_size)
+				chunk.generate_random()
+				chunk.generate_mesh(voxel_material)
+				chunks[x][y][z] = chunk
 
 
 

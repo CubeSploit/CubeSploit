@@ -1,17 +1,14 @@
+extends MeshInstance
+
 var pos
 var size
 var raw_data
 var body
 var mesh_instance
 
-func _init(body, pos, size):
+func _init(body, size):
 	self.body = body
-	self.pos = pos
 	self.size = size
-
-	mesh_instance = MeshInstance.new()
-	body.add_child(mesh_instance)
-	mesh_instance.set_translation(pos)
 
 func generate_random( ):
 	raw_data = []
@@ -151,7 +148,7 @@ func generate_mesh( voxel_material ):
 			idx = quad.add_to_surface(st, idx);
 
 	# commit the mesh and set it in the mesh instance
-	mesh_instance.set_mesh(st.commit())
+	set_mesh(st.commit())
 
 
 func greedy_mesh( quads ):
