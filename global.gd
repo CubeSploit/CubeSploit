@@ -21,7 +21,12 @@ const voxel_types = {
 	red = 3,
 	count = 4
 }
-
+var voxel_textures = [
+	null,
+	load("res://world/voxel/blue.png"),
+	load("res://world/voxel/green.png"),
+	load("res://world/voxel/red.png")
+]
 
 func _ready():
 	pass
