@@ -1,12 +1,12 @@
 extends Node
 
 var scenes = {
-	body= load("res://world/body/body.tscn")
+	body= preload("res://world/body/body.tscn")
 }
 
 var classes = {
-	chunk= load("res://world/body/chunk.gd"),
-	quad= load("res://world/body/quad.gd")
+	chunk= preload("res://world/body/chunk.gd"),
+	quad= preload("res://world/body/quad.gd")
 }
 
 const faces = {
@@ -30,9 +30,9 @@ const voxel_types = {
 }
 var voxel_textures = [
 	null,
-	load("res://world/voxel/blue.png"),
-	load("res://world/voxel/green.png"),
-	load("res://world/voxel/red.png")
+	preload("res://world/voxel/blue.png"),
+	preload("res://world/voxel/green.png"),
+	preload("res://world/voxel/red.png")
 ]
 
 func _ready():
