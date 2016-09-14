@@ -1,0 +1,6 @@
+[gd_resource type="MaterialShader" format=1]
+
+[resource]
+
+_code = { "fragment":"uniform texture text;\n\n// UV has values superior to 1 to induce texture repeat\n// but we use a texture atlas so this isn\'t possible just like that\n// we encode in COLOR and ALPHA the targeted rect of that texture atlas \n\n// takes the floating part of UV\nvec2 uv = mod(UV, vec2(1,1));\n\nvec2 offset = COLOR.rg;\nvec2 extent = COLOR.ba;\n\n// scales floating part of UV to the scale of the texture atlas elements\nuv = uv * extent;\n\n// add the texture atlas offset to uv in order to select the right uv\nuv = uv + offset;\n\n//\nDIFFUSE = tex(text, uv).rgb;\nSPECULAR = tex(text, uv).rgb;\nSPEC_EXP = 40;\n\n", "fragment_ofs":0, "light":"", "light_ofs":0, "vertex":"", "vertex_ofs":0 }
+

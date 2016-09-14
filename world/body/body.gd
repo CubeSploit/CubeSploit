@@ -1,6 +1,7 @@
 extends Spatial
 
 export(Material) var voxel_material
+export(Material) var voxel_material_text
 
 var chunk_size = 32
 var chunks = [] # 3D array containing the chunks of the body
