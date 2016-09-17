@@ -18,13 +18,14 @@ func generate_random( size ):
 	var chunk
 	chunks = []
 	chunks.resize( chunk_count_per_direction )
-	for x in range(chunk_count_per_direction):
+	var iterator_range = range(chunk_count_per_direction) # Optimization, would have to be removed when real iterators come
+	for x in iterator_range:
 		chunks[x] = []
 		chunks[x].resize(chunk_count_per_direction)
-		for y in range(chunk_count_per_direction):
+		for y in iterator_range:
 			chunks[x][y] = []
 			chunks[x][y].resize(chunk_count_per_direction)
-			for z in range(chunk_count_per_direction):
+			for z in iterator_range:
 				chunk = global.classes.chunk.new( self, chunk_size )
 				add_child(chunk)
 				chunk.set_translation(Vector3(x,y,z)*chunk_size)

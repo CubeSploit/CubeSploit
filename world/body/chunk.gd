@@ -4,55 +4,34 @@ var pos = Vector3(0,0,0)
 var size = 32
 var raw_data = [] # sixe * sixe 2D array
 var body = null # ref of the parent node
+var iterator_range # Optimization, would have to be removed when real iterators come
 
 func _init(body, size):
 	self.body = body
 	self.size = size
+	iterator_range = range(size) # Optimization, would have to be removed when real iterators come
 
 func generate_random( ):
 	raw_data = []
 	raw_data.resize(size)
-	for x in range(size):
+	
+	for x in iterator_range:
 		raw_data[x] = []
 		raw_data[x].resize(size)
-		for y in range(size):
+		for y in iterator_range:
 			raw_data[x][y] = []
 			raw_data[x][y].resize(size)
-			for z in range(size):
+			for z in iterator_range:
 				raw_data[x][y][z] = (randi()%(global.Voxel_Types.COUNT-1))+1
 #				raw_data[x][y][z] = randi()%global.Voxel_Types.COUNT
 #				raw_data[x][y][z] = 1
 
 
-func get_neighbour_voxel(current_voxel, direction):
-	var neighbour_voxel = Vector3(current_voxel)
-
-	if( direction == global.Faces.FRONT ):
-		neighbour_voxel.z +=1
-	elif( direction == global.Faces.BACK ):
-		neighbour_voxel.z -=1
-
-	elif( direction == global.Faces.RIGHT ):
-		neighbour_voxel.x +=1
-	elif( direction == global.Faces.LEFT ):
-		neighbour_voxel.x -=1
-
-	elif( direction == global.Faces.TOP):
-		neighbour_voxel.y +=1
-	elif( direction == global.Faces.BOTTOM ):
-		neighbour_voxel.y -=1
-
-	return neighbour_voxel
-
 func get_neighbour_voxel_type ( current_voxel, direction ):
-	var neighbour_voxel = get_neighbour_voxel( current_voxel, direction )
+	var neighbour_voxel = current_voxel + global.FaceDirections[direction]
 	if( neighbour_voxel[neighbour_voxel.min_axis()] < 0 || neighbour_voxel[neighbour_voxel.max_axis()] >= size ):
 		return global.Voxel_Types.EMPTY
-		
 	return raw_data[neighbour_voxel.x][neighbour_voxel.y][neighbour_voxel.z]
-	
-
-
 
 func generate_mesh( voxel_material ):
 	# create and initialize the surfacetool and other handy variables
@@ -64,7 +43,7 @@ func generate_mesh( voxel_material ):
 	# create a two dimensional array of quads, will contain all the raw quads of a given face before they are optimized
 	var quads = []
 	quads.resize(size)
-	for x in range(size):
+	for x in iterator_range:
 		quads[x] = []
 		quads[x].resize(size)
 
@@ -76,10 +55,10 @@ func generate_mesh( voxel_material ):
 	
 	# front
 	# for each layer of the front face
-	for z in range(size):
+	for z in iterator_range:
 		# for each slot of the front face
-		for x in range(size):
-			for y in range(size):
+		for x in iterator_range:
+			for y in iterator_range:
 				# if the slot isn't empty and the neighbour slot in front of it isn't full
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.Voxel_Types.EMPTY ):
 					# register the quad
@@ -92,9 +71,9 @@ func generate_mesh( voxel_material ):
 			idx = quad.add_to_surface(st, idx);
 
 	# back
-	for z in range(size):
-		for x in range(size):
-			for y in range(size):
+	for z in iterator_range:
+		for x in iterator_range:
+			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.Voxel_Types.EMPTY ):
 					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
 
@@ -103,9 +82,9 @@ func generate_mesh( voxel_material ):
 			idx = quad.add_to_surface(st, idx);
 
 	# right
-	for x in range(size):
-		for z in range(size):
-			for y in range(size):
+	for x in iterator_range:
+		for z in iterator_range:
+			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.Voxel_Types.EMPTY ):
 					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
 
@@ -114,9 +93,9 @@ func generate_mesh( voxel_material ):
 			idx = quad.add_to_surface(st, idx);
 
 	# left
-	for x in range(size):
-		for z in range(size):
-			for y in range(size):
+	for x in iterator_range:
+		for z in iterator_range:
+			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.Voxel_Types.EMPTY ):
 					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
 
@@ -125,9 +104,9 @@ func generate_mesh( voxel_material ):
 			idx = quad.add_to_surface(st, idx);
 
 	# top
-	for y in range(size):
-		for x in range(size):
-			for z in range(size):
+	for y in iterator_range:
+		for x in iterator_range:
+			for z in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.Voxel_Types.EMPTY ):
 					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
 
@@ -136,9 +115,9 @@ func generate_mesh( voxel_material ):
 			idx = quad.add_to_surface(st, idx);
 			
 	# top
-	for y in range(size):
-		for x in range(size):
-			for z in range(size):
+	for y in iterator_range:
+		for x in iterator_range:
+			for z in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.Voxel_Types.EMPTY ):
 					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
 
@@ -161,8 +140,8 @@ func greedy_mesh( quads ):
 	var full_row
 
 	# for each slot of the surface
-	for x in range(size):
-		for y in range(size):
+	for x in iterator_range:
+		for y in iterator_range:
 			# if the slot is empty, continue to next loop
 			if( quads[x][y] == null):
 				continue

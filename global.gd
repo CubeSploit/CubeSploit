@@ -19,6 +19,15 @@ const Faces = {
 	COUNT = 6
 }
 
+const FaceDirections = [
+	Vector3(0,0,1), #FRONT
+	Vector3(0,0,-1), #BACK
+	Vector3(1,0,0), #RIGHT
+	Vector3(-1,0,0), #LEFT
+	Vector3(0,1,0), #TOP
+	Vector3(0,-1,0) #BOTTOM
+]
+
 
 
 const Voxel_Types = {
