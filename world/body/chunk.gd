@@ -146,8 +146,9 @@ func greedy_mesh( quads ):
 
 	var quad
 	var return_quads = []
-	var x_offset
-	var y_offset
+	var x_neighbour
+	var x_neighbour_range
+	var y_neighbour
 	var keep_scanning_rows
 	var full_row
 
@@ -164,43 +165,45 @@ func greedy_mesh( quads ):
 			quads[x][y] = null
 			return_quads.append(quad)
 
-			# set offset to the neighbour slot to the right
-			x_offset = 1
 			# while horizontal end is not reached and there is a neighbour slot to the right with a quad of the same type
-			while( x+x_offset < size && quads[x+x_offset][y] && quads[x+x_offset][y].type == quad.type ):
+			# set position to the neighbour slot to the right
+			x_neighbour = x+1
+			while( x_neighbour < size && quads[x_neighbour][y] && quads[x_neighbour][y].type == quad.type ):
 				# remove that neighbour quad and increase the current quad's width
-				quads[x+x_offset][y] = null
+				quads[x_neighbour][y] = null
 				quad.w += 1
 				# next neighbour slot to the right
-				x_offset +=1
+				x_neighbour +=1
 
 			# at this point, the slot to the right is empty or has a quad of different type, we can't expend the current quad further to the right
 			
-			# set offset to the neighbour row of slots to the bottom
-			y_offset = 1
+			# set position to the neighbour row of slots to the bottom
+			y_neighbour = y+1
 			# this boolean will determine if we continue scanning next row, typically if we successfuly extended the current quad to the bottom we continue scanning
 			keep_scanning_rows = true
 			# while vertical end is not reached and we're allowed to keep scanning neighbours of the row bellow, meaning the current quad was extended to the bottom during previous loop
-			while( y+y_offset < size && keep_scanning_rows  ):
+			while( y_neighbour < size && keep_scanning_rows  ):
 				# this boolean will determine if all slot of the row bellow our current quad contains quads of the same type
 				full_row = true
 				# for each slot of the row bellow the current quad
-				for x_offset in range(quad.w):
+				x_neighbour_range = range(x, x+quad.w)
+				for x_neighbour in x_neighbour_range:
 					# if one slot of the row hasn't a quad or has a quad of a different type
-					if( !quads[x+x_offset][y+y_offset] || quads[x+x_offset][y+y_offset].type != quad.type ):
+					if( !quads[x_neighbour][y_neighbour] || quads[x_neighbour][y_neighbour].type != quad.type ):
 						# stop the scanning and say the row is not full
 						full_row = false
 						break
 				# if the row is full of quads of the same type, we can extend the current quad
 				if( full_row ):
 					# for each slot of the row bellow
-					for x_offset in range(quad.w):
+					x_neighbour_range = range(x, x+quad.w)
+					for x_neighbour in x_neighbour_range:
 						# remove the quad in the slot
-						quads[x+x_offset][y+y_offset] = null
+						quads[x_neighbour][y_neighbour] = null
 					# increase the height of the current quad
 					quad.h +=1
-					# set offset to the next neighbour row to the bottom
-					y_offset += 1
+					# set position to the next neighbour row to the bottom
+					y_neighbour += 1
 					# we expended the current quad, we can continue scanning neighbour rows bellow
 					keep_scanning_rows = true
 				# if the row is not full
