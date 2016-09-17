@@ -63,12 +63,14 @@ func generate_mesh( voxel_material ):
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.Voxel_Types.EMPTY ):
 					# register the quad
 					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
+				else:
+					quads[x][y] = null
 		# optimize the quads with greedy meshing
 		to_display_quads = greedy_mesh(quads)
 		# for each quads in the list of quads to display
 		for quad in to_display_quads:
 			# add quad to surface tool
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx)
 
 	# back
 	for z in iterator_range:
@@ -76,10 +78,12 @@ func generate_mesh( voxel_material ):
 			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.Voxel_Types.EMPTY ):
 					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
+				else:
+					quads[x][y] = null
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx)
 
 	# right
 	for x in iterator_range:
@@ -87,10 +91,12 @@ func generate_mesh( voxel_material ):
 			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.Voxel_Types.EMPTY ):
 					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
+				else:
+					quads[z][y] = null
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx)
 
 	# left
 	for x in iterator_range:
@@ -98,10 +104,12 @@ func generate_mesh( voxel_material ):
 			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.Voxel_Types.EMPTY ):
 					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
+				else:
+					quads[z][y] = null
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx)
 
 	# top
 	for y in iterator_range:
@@ -109,21 +117,25 @@ func generate_mesh( voxel_material ):
 			for z in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.Voxel_Types.EMPTY ):
 					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
+				else:
+					quads[x][z] = null
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx)
 			
-	# top
+	# bottom
 	for y in iterator_range:
 		for x in iterator_range:
 			for z in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.Voxel_Types.EMPTY ):
 					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
+				else:
+					quads[x][z] = null
 
 		to_display_quads = greedy_mesh(quads)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx);
+			idx = quad.add_to_surface(st, idx)
 
 	# commit the mesh
 	set_mesh(st.commit())
