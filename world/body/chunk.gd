@@ -1,5 +1,7 @@
 extends MeshInstance
 
+const Quad = preload("res://world/body/quad.gd")
+
 var pos = Vector3(0,0,0)
 var size = 32
 var raw_data = [] # sixe * sixe 2D array
@@ -62,7 +64,7 @@ func generate_mesh( voxel_material ):
 				# if the slot isn't empty and the neighbour slot in front of it isn't full
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.Voxel_Types.EMPTY ):
 					# register the quad
-					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
+					quads[x][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
 				else:
 					quads[x][y] = null
 		# optimize the quads with greedy meshing
@@ -77,7 +79,7 @@ func generate_mesh( voxel_material ):
 		for x in iterator_range:
 			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.Voxel_Types.EMPTY ):
-					quads[x][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
+					quads[x][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
 				else:
 					quads[x][y] = null
 
@@ -90,7 +92,7 @@ func generate_mesh( voxel_material ):
 		for z in iterator_range:
 			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.Voxel_Types.EMPTY ):
-					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
+					quads[z][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
 
@@ -103,7 +105,7 @@ func generate_mesh( voxel_material ):
 		for z in iterator_range:
 			for y in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.Voxel_Types.EMPTY ):
-					quads[z][y] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
+					quads[z][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
 
@@ -116,7 +118,7 @@ func generate_mesh( voxel_material ):
 		for x in iterator_range:
 			for z in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.Voxel_Types.EMPTY ):
-					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
+					quads[x][z] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
 				else:
 					quads[x][z] = null
 
@@ -129,7 +131,7 @@ func generate_mesh( voxel_material ):
 		for x in iterator_range:
 			for z in iterator_range:
 				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.Voxel_Types.EMPTY ):
-					quads[x][z] = global.classes.quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
+					quads[x][z] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
 				else:
 					quads[x][z] = null
 

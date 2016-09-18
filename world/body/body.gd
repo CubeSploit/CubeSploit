@@ -1,5 +1,7 @@
 extends Spatial
 
+const Chunk = preload("res://world/body/chunk.gd")
+
 export(Material) var voxel_material
 export(Material) var voxel_material_text
 
@@ -26,7 +28,7 @@ func generate_random( size ):
 			chunks[x][y] = []
 			chunks[x][y].resize(chunk_count_per_direction)
 			for z in iterator_range:
-				chunk = global.classes.chunk.new( self, chunk_size )
+				chunk = Chunk.new( self, chunk_size )
 				add_child(chunk)
 				chunk.set_translation(Vector3(x,y,z)*chunk_size)
 				chunk.generate_random()

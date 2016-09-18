@@ -1,14 +1,5 @@
 extends Node
 
-const scenes = {
-	body= preload("res://world/body/body.tscn")
-}
-
-const classes = {
-	chunk= preload("res://world/body/chunk.gd"),
-	quad= preload("res://world/body/quad.gd")
-}
-
 const Faces = {
 	FRONT = 0,
 	BACK = 1,
