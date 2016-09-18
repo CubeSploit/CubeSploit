@@ -5,7 +5,7 @@ var speed = 50
 var angular_speed = 0.05
 
 var last_mouse_pos = Vector2(0,0)
-onready var camera = get_node("Camera")
+onready var camera = get_node("camera")
 
 func _ready():
 	Input.set_mouse_mode( Input.MOUSE_MODE_CAPTURED )

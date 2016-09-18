@@ -48,18 +48,18 @@ bcs/contrast = 1.0
 bcs/saturation = 1.0
 srgb/enabled = false
 
-[node name="World" type="Spatial"]
+[node name="world" type="Spatial"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script/script = ExtResource( 1 )
 BodyScene = ExtResource( 2 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="world_environment" type="WorldEnvironment" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 environment = SubResource( 1 )
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
+[node name="directional_light" type="DirectionalLight" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.560627, 0.437305, 0.703179, -0.812295, 0.125478, 0.569588, 0.160851, -0.890516, 0.425568, 0, 25.6505, 0 )
@@ -83,13 +83,9 @@ shadow/max_distance = 0.0
 shadow/split_weight = 0.5
 shadow/zoffset_scale = 2.0
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
+[node name="player" parent="." instance=ExtResource( 3 )]
 
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
 
-[node name="Camera" parent="Player"]
 
-far = 1000.0
-
-
-[editable path="Player"]
+[editable path="player"]
