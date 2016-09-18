@@ -21,7 +21,7 @@ const FaceDirections = [
 
 
 
-const Voxel_Types = {
+const VoxelTypes = {
 	EMPTY = 0,
 	BLUE = 1,
 	GREEN = 2,

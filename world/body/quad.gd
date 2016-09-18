@@ -1,5 +1,5 @@
 
-var type = global.Voxel_Types.EMPTY
+var type = global.VoxelTypes.EMPTY
 var pos = Vector3(0,0,0)
 var face = global.Faces.FRONT
 var x = 0
@@ -34,8 +34,8 @@ func _init( type, pos, face, x, y, w, h ):
 	self.h = h
 
 func add_to_surface(st, idx):
-	var uv_start = float(type-1)/(global.Voxel_Types.COUNT-1)
-	var uv_delta = 1.0/(global.Voxel_Types.COUNT-1)
+	var uv_start = float(type-1)/(global.VoxelTypes.COUNT-1)
+	var uv_delta = 1.0/(global.VoxelTypes.COUNT-1)
 
 	var v3_mult = Vector3(1,1,1)
 	if( face == global.Faces.FRONT || face == global.Faces.BACK ):

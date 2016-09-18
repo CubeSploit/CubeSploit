@@ -24,15 +24,15 @@ func generate_random( ):
 			raw_data[x][y] = []
 			raw_data[x][y].resize(size)
 			for z in iterator_range:
-				raw_data[x][y][z] = (randi()%(global.Voxel_Types.COUNT-1))+1
-#				raw_data[x][y][z] = randi()%global.Voxel_Types.COUNT
+				raw_data[x][y][z] = (randi()%(global.VoxelTypes.COUNT-1))+1
+#				raw_data[x][y][z] = randi()%global.VoxelTypes.COUNT
 #				raw_data[x][y][z] = 1
 
 
 func get_neighbour_voxel_type ( current_voxel, direction ):
 	var neighbour_voxel = current_voxel + global.FaceDirections[direction]
 	if( neighbour_voxel[neighbour_voxel.min_axis()] < 0 || neighbour_voxel[neighbour_voxel.max_axis()] >= size ):
-		return global.Voxel_Types.EMPTY
+		return global.VoxelTypes.EMPTY
 	return raw_data[neighbour_voxel.x][neighbour_voxel.y][neighbour_voxel.z]
 
 func generate_mesh( voxel_material ):
@@ -62,7 +62,7 @@ func generate_mesh( voxel_material ):
 		for x in iterator_range:
 			for y in iterator_range:
 				# if the slot isn't empty and the neighbour slot in front of it isn't full
-				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.Voxel_Types.EMPTY ):
+				if( raw_data[x][y][z] != global.VoxelTypes.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.VoxelTypes.EMPTY ):
 					# register the quad
 					quads[x][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
 				else:
@@ -78,7 +78,7 @@ func generate_mesh( voxel_material ):
 	for z in iterator_range:
 		for x in iterator_range:
 			for y in iterator_range:
-				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.Voxel_Types.EMPTY ):
+				if( raw_data[x][y][z] != global.VoxelTypes.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.VoxelTypes.EMPTY ):
 					quads[x][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
 				else:
 					quads[x][y] = null
@@ -91,7 +91,7 @@ func generate_mesh( voxel_material ):
 	for x in iterator_range:
 		for z in iterator_range:
 			for y in iterator_range:
-				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.Voxel_Types.EMPTY ):
+				if( raw_data[x][y][z] != global.VoxelTypes.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.VoxelTypes.EMPTY ):
 					quads[z][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
@@ -104,7 +104,7 @@ func generate_mesh( voxel_material ):
 	for x in iterator_range:
 		for z in iterator_range:
 			for y in iterator_range:
-				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.Voxel_Types.EMPTY ):
+				if( raw_data[x][y][z] != global.VoxelTypes.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.VoxelTypes.EMPTY ):
 					quads[z][y] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
@@ -117,7 +117,7 @@ func generate_mesh( voxel_material ):
 	for y in iterator_range:
 		for x in iterator_range:
 			for z in iterator_range:
-				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.Voxel_Types.EMPTY ):
+				if( raw_data[x][y][z] != global.VoxelTypes.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.VoxelTypes.EMPTY ):
 					quads[x][z] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
 				else:
 					quads[x][z] = null
@@ -130,7 +130,7 @@ func generate_mesh( voxel_material ):
 	for y in iterator_range:
 		for x in iterator_range:
 			for z in iterator_range:
-				if( raw_data[x][y][z] != global.Voxel_Types.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.Voxel_Types.EMPTY ):
+				if( raw_data[x][y][z] != global.VoxelTypes.EMPTY && get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.VoxelTypes.EMPTY ):
 					quads[x][z] = Quad.new(raw_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
 				else:
 					quads[x][z] = null
