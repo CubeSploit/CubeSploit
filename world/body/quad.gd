@@ -8,20 +8,20 @@ var w = 1
 var h = 1
 
 const quads_vertices = [
-	[Vector3(0,0,1), Vector3(0,1,1), Vector3(1,1,1), Vector3(1,0,1)], # front
-	[Vector3(1,0,0), Vector3(1,1,0), Vector3(0,1,0), Vector3(0,0,0)], # back
-	[Vector3(1,0,1), Vector3(1,1,1), Vector3(1,1,0), Vector3(1,0,0)], # right
-	[Vector3(0,0,0), Vector3(0,1,0), Vector3(0,1,1), Vector3(0,0,1)], # left
-	[Vector3(0,1,1), Vector3(0,1,0), Vector3(1,1,0), Vector3(1,1,1)], # top
-	[Vector3(0,0,0), Vector3(0,0,1), Vector3(1,0,1), Vector3(1,0,0)] # bottom
+	[Vector3(0,0,1), Vector3(0,1,1), Vector3(1,1,1), Vector3(1,0,1)], # Front
+	[Vector3(1,0,0), Vector3(1,1,0), Vector3(0,1,0), Vector3(0,0,0)], # Back
+	[Vector3(1,0,1), Vector3(1,1,1), Vector3(1,1,0), Vector3(1,0,0)], # Right
+	[Vector3(0,0,0), Vector3(0,1,0), Vector3(0,1,1), Vector3(0,0,1)], # Left
+	[Vector3(0,1,1), Vector3(0,1,0), Vector3(1,1,0), Vector3(1,1,1)], # Top
+	[Vector3(0,0,0), Vector3(0,0,1), Vector3(1,0,1), Vector3(1,0,0)] # Bottom
 ]
 const quads_normals = [
-	Vector3(0,0,1), # front
-	Vector3(0,0,-1), # back
-	Vector3(1,0,0), # right
-	Vector3(-1,0,0), # left
-	Vector3(0,1,0), # top
-	Vector3(0,-1,0) # bottom
+	Vector3(0,0,1), # Front
+	Vector3(0,0,-1), # Back
+	Vector3(1,0,0), # Right
+	Vector3(-1,0,0), # Left
+	Vector3(0,1,0), # Top
+	Vector3(0,-1,0) # Bottom
 ]
 
 func _init( type, pos, face, x, y, w, h ):

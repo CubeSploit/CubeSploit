@@ -13,7 +13,7 @@ func _ready():
 	
 	
 func _fixed_process(delta):
-	# getting delta movement of mouse
+	# Getting delta movement of mouse
 	var current_mouse_pos = get_viewport().get_mouse_pos()
 	var delta_mouse_pos =  current_mouse_pos - last_mouse_pos
 	last_mouse_pos = get_viewport().get_mouse_pos()
@@ -44,8 +44,8 @@ func _fixed_process(delta):
 	else:
 		velocity.y = 0
 
-#	We want the player to move forward and backward to/from where it is looking at
-#	Don't ask me why this does the work.
+	# We want the player to move forward and backward to/from where it is looking at
+	# Don't ask me why this does the work.
 	move(get_transform().basis * camera.get_transform().basis * velocity )
 
 	
