@@ -4,7 +4,7 @@ var velocity = Vector3(0,0,0)
 var speed = 50
 var angular_speed = 0.05
 
-var last_mouse_pos = Vector2(0,0)
+onready var last_mouse_pos = get_viewport().get_mouse_pos()
 onready var camera = get_node("camera")
 
 func _ready():
@@ -16,6 +16,8 @@ func _fixed_process(delta):
 	# Getting delta movement of mouse
 	var current_mouse_pos = get_viewport().get_mouse_pos()
 	var delta_mouse_pos =  current_mouse_pos - last_mouse_pos
+	if( current_mouse_pos.distance_to(last_mouse_pos) > 1000 ):
+		delta_mouse_pos = Vector2(0,0)
 	last_mouse_pos = get_viewport().get_mouse_pos()
 #	print(delta_mouse_pos)
 	
