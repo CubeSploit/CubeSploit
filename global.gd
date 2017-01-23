@@ -29,5 +29,12 @@ const VoxelTypes = {
 	COUNT = 4
 }
 
+const CHUNK_OPTIMIZERS = {
+	"GREEDY_MESHING_OPTIMIZER": preload('res://world/body/chunk_optimizers/greedy_meshing_optimizer.gd')
+}
+
+
+
+
 func _ready():
 	pass
