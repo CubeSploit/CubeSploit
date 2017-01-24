@@ -18,7 +18,8 @@ func _fixed_process(delta):
 	var delta_mouse_pos =  current_mouse_pos - last_mouse_pos
 	if( current_mouse_pos.distance_to(last_mouse_pos) > 1000 ):
 		delta_mouse_pos = Vector2(0,0)
-	last_mouse_pos = get_viewport().get_mouse_pos()
+
+	last_mouse_pos = current_mouse_pos
 #	print(delta_mouse_pos)
 	
 	rotate_y( delta_mouse_pos.x * angular_speed * delta )

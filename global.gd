@@ -33,7 +33,9 @@ const CHUNK_OPTIMIZERS = {
 	"GREEDY_MESHING_OPTIMIZER": preload('res://world/body/chunk_optimizers/greedy_meshing_optimizer.gd')
 }
 
-
+const CHUNK_INITIALIZERS = {
+	"RANDOM_INITIALIZER": preload('res://world/body/chunk_initializers/random_initializer.gd')
+}
 
 
 func _ready():

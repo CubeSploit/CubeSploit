@@ -10,21 +10,9 @@ func _init(body, size):
 	self.body = body
 	self.size = size
 	iterator_range = range(size) # Optimization, would have to be removed when real iterators come
-
-func generate_random( ):
-	raw_data = []
-	raw_data.resize(size)
 	
-	for x in iterator_range:
-		raw_data[x] = []
-		raw_data[x].resize(size)
-		for y in iterator_range:
-			raw_data[x][y] = []
-			raw_data[x][y].resize(size)
-			for z in iterator_range:
-				raw_data[x][y][z] = (randi()%(global.VoxelTypes.COUNT-1))+1
-#				raw_data[x][y][z] = randi()%global.VoxelTypes.COUNT
-#				raw_data[x][y][z] = 1
+func generate_random( ):
+	global.CHUNK_INITIALIZERS.RANDOM_INITIALIZER.initialize( self )
 
 
 func get_neighbour_voxel_type ( current_voxel, direction ):
