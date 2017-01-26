@@ -1,11 +1,13 @@
 extends Spatial
 
 const Chunk = preload("res://world/body/chunk.gd")
+const OctreeChunk = preload("res://world/body/octree_chunk.gd")
+const OctreeNode = preload('res://world/body/octree_node.gd')
 
 export(Material) var voxel_material
 export(Material) var voxel_material_text
 
-var chunk_size = 32
+var chunk_size = 2
 var chunks = [] # 3D array containing the chunks of the body
 
 
@@ -13,7 +15,11 @@ func _ready():
 	pass
 
 
-
+var octree_root
+func generate_random_octree( body_size ):
+	octree_root = OctreeNode.new(body_size, self)
+	
+	
 func generate_random( size ):
 	var chunk_count_per_direction = ceil( float(size) / chunk_size )
 
