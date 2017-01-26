@@ -34,7 +34,9 @@ const CHUNK_OPTIMIZERS = {
 }
 
 const CHUNK_INITIALIZERS = {
-	"RANDOM_INITIALIZER": preload('res://world/body/chunk_initializers/random_initializer.gd')
+	"RANDOM_INITIALIZER": preload('res://world/body/chunk_initializers/random_initializer.gd'),
+	"RANDOM_PLAIN_INITIALIZER": preload('res://world/body/chunk_initializers/random_plain_initializer.gd'),
+	"OCTREE_UPWARD_NAIVE_INITIALIZE": preload('res://world/body/chunk_initializers/octree_upward_naive_initializer.gd')
 }
 
 
