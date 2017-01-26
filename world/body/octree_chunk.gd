@@ -41,7 +41,7 @@ func init_from_bellow( ):
 				var child_chunk = child.chunk
 					
 				# computing the starting pos of the child
-				var child_start_pos = (Vector3(x% hsize,y% hsize,z% hsize) )*2
+				var child_start_pos = (Vector3( x % hsize, y % hsize, z % hsize) )*2
 				
 				# creating table of block type count
 				var block_list = {}
@@ -59,11 +59,14 @@ func init_from_bellow( ):
 				var list_keys = block_list.keys()
 				for i in range(list_keys.size()):
 					var block_type = list_keys[i]
-					if( block_list[block_type] > best_block_count ):
+					if( block_type != global.VoxelTypes.EMPTY && block_list[block_type] > best_block_count ):
 						best_block_count = block_list[block_type]
 						best_block_type = block_type
 				
-				raw_data[x][y][z] = best_block_type
+				if( block_list.has( global.VoxelTypes.EMPTY) && block_list[global.VoxelTypes.EMPTY] > 4 ):
+					raw_data[x][y][z] = global.VoxelTypes.EMPTY
+				else:
+					raw_data[x][y][z] = best_block_type
 							
 
 func get_neighbour_voxel_type ( current_voxel, direction ):

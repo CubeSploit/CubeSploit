@@ -87,5 +87,9 @@ shadow/zoffset_scale = 2.0
 
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
 
+[node name="camera" parent="player"]
+
+far = 50000.0
+
 
 [editable path="player"]
