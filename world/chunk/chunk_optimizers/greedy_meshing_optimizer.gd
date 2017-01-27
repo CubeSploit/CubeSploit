@@ -1,6 +1,5 @@
-const Quad = preload("res://world/body/quad.gd")
-
 static func optimize(chunk, voxel_material):
+
 	var chunk_size = chunk.size
 	var chunk_data = chunk.raw_data
 	var iterator_range = range(chunk_size)
@@ -33,7 +32,7 @@ static func optimize(chunk, voxel_material):
 				# If the slot isn't empty and the neighbour slot in front of it isn't full
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.VoxelTypes.EMPTY ):
 					# Register the quad
-					quads[x][y] = Quad.new(chunk_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
+					quads[x][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
 				else:
 					quads[x][y] = null
 		# Optimize the quads with greedy meshing
@@ -48,7 +47,7 @@ static func optimize(chunk, voxel_material):
 		for x in iterator_range:
 			for y in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.VoxelTypes.EMPTY ):
-					quads[x][y] = Quad.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
+					quads[x][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
 				else:
 					quads[x][y] = null
 
@@ -61,7 +60,7 @@ static func optimize(chunk, voxel_material):
 		for z in iterator_range:
 			for y in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.VoxelTypes.EMPTY ):
-					quads[z][y] = Quad.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
+					quads[z][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
 
@@ -74,7 +73,7 @@ static func optimize(chunk, voxel_material):
 		for z in iterator_range:
 			for y in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.VoxelTypes.EMPTY ):
-					quads[z][y] = Quad.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
+					quads[z][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
 
@@ -87,7 +86,7 @@ static func optimize(chunk, voxel_material):
 		for x in iterator_range:
 			for z in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.VoxelTypes.EMPTY ):
-					quads[x][z] = Quad.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
+					quads[x][z] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
 				else:
 					quads[x][z] = null
 
@@ -100,7 +99,7 @@ static func optimize(chunk, voxel_material):
 		for x in iterator_range:
 			for z in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.VoxelTypes.EMPTY ):
-					quads[x][z] = Quad.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
+					quads[x][z] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
 				else:
 					quads[x][z] = null
 

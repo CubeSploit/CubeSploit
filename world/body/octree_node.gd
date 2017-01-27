@@ -1,5 +1,5 @@
 var OctreeNode = get_script()
-const OctreeChunk = preload("res://world/body/octree_chunk.gd")
+var OctreeChunk = global.SCRIPTS.OCTREE_CHUNK
 
 var size
 var body

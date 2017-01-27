@@ -29,14 +29,23 @@ const VoxelTypes = {
 	COUNT = 4
 }
 
+const SCENES = {
+	
+}
+const SCRIPTS = {
+	"OCTREE_NODE": preload('res://world/body/octree_node.gd'),
+	"OCTREE_CHUNK": preload('res://world/chunk/octree_chunk.gd'),
+	"QUAD": preload('res://world/chunk/chunk_optimizers/quad.gd')
+}
+
 const CHUNK_OPTIMIZERS = {
-	"GREEDY_MESHING_OPTIMIZER": preload('res://world/body/chunk_optimizers/greedy_meshing_optimizer.gd')
+	"GREEDY_MESHING_OPTIMIZER": preload('res://world/chunk/chunk_optimizers/greedy_meshing_optimizer.gd')
 }
 
 const CHUNK_INITIALIZERS = {
-	"RANDOM_INITIALIZER": preload('res://world/body/chunk_initializers/random_initializer.gd'),
-	"RANDOM_PLAIN_INITIALIZER": preload('res://world/body/chunk_initializers/random_plain_initializer.gd'),
-	"OCTREE_UPWARD_NAIVE_INITIALIZE": preload('res://world/body/chunk_initializers/octree_upward_naive_initializer.gd')
+	"RANDOM_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_initializer.gd'),
+	"RANDOM_PLAIN_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_plain_initializer.gd'),
+	"OCTREE_UPWARD_NAIVE_INITIALIZE": preload('res://world/chunk/chunk_initializers/octree_upward_naive_initializer.gd')
 }
 
 
