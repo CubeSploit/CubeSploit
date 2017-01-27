@@ -30,11 +30,11 @@ const VoxelTypes = {
 }
 
 const SCENES = {
-	
+	"OCTREE_CHUNK": preload('res://world/chunk/octree_chunk.tscn')
 }
 const SCRIPTS = {
 	"OCTREE_NODE": preload('res://world/body/octree_node.gd'),
-	"OCTREE_CHUNK": preload('res://world/chunk/octree_chunk.gd'),
+#	"OCTREE_CHUNK": preload('res://world/chunk/octree_chunk.gd'),
 	"QUAD": preload('res://world/chunk/chunk_optimizers/quad.gd')
 }
 

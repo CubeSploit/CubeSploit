@@ -7,8 +7,8 @@ var body = null # Ref of the parent node
 var iterator_range # Optimization, would have to be removed when real iterators come
 
 var octree_node
-
-func _init(body):
+	
+func init(body):
 	self.body = body
 	self.size = body.chunk_size
 	iterator_range = range(size) # Optimization, would have to be removed when real iterators come

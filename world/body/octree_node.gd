@@ -1,5 +1,5 @@
 var OctreeNode = get_script()
-var OctreeChunk = global.SCRIPTS.OCTREE_CHUNK
+var OctreeChunkScene = global.SCENES.OCTREE_CHUNK
 
 var size
 var body
@@ -22,7 +22,8 @@ func _init(size, body, octree_pos = Vector3(0,0,0), parent = null):
 	self.body = body
 	self.parent = parent
 	
-	chunk = OctreeChunk.new( self.body )
+	chunk = OctreeChunkScene.instance()
+	chunk.init( self.body )
 	self.body.add_child(chunk)
 	var parent_pos = Vector3(0,0,0)
 	if( parent ):
