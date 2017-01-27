@@ -23,13 +23,13 @@ func _init(size, body, octree_pos = Vector3(0,0,0), parent = null):
 	self.parent = parent
 	
 	chunk = OctreeChunkScene.instance()
-	chunk.init( self.body )
+	chunk.init( self, self.body )
 	self.body.add_child(chunk)
+	
 	var parent_pos = Vector3(0,0,0)
 	if( parent ):
 		parent_pos = parent.chunk.get_translation()
-	chunk.set_translation(  parent_pos +  octree_pos*size + (Vector3( 5+16,0,0)))
-	chunk.octree_node = self
+	chunk.set_translation(  parent_pos +  octree_pos*size)
 	
 	if( !self.is_leaf ):
 		self.children = []
@@ -48,4 +48,26 @@ func _init(size, body, octree_pos = Vector3(0,0,0), parent = null):
 		
 	chunk.generate_mesh( body.voxel_material )
 	chunk.set_scale( Vector3(1,1,1) * (size/body.chunk_size) )
-	
+
+func child_in_range():
+	chunk.set_hidden(true)
+	for x in range(2):
+		for y in range(2):
+			for z in range(2):
+				children[x][y][z].chunk.set_hidden(false)
+
+
+func child_out_of_range():
+#	chunk.set_hidden(true)
+	var children_out_of_range_count = 0
+	for x in range(2):
+		for y in range(2):
+			for z in range(2):
+				if( !children[x][y][z].chunk.in_player_range ):
+					children_out_of_range_count +=1
+	if( children_out_of_range_count == 8 ):
+		chunk.set_hidden(false)
+		for x in range(2):
+			for y in range(2):
+				for z in range(2):
+					children[x][y][z].chunk.set_hidden(true)
