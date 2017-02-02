@@ -9,6 +9,3 @@ func _ready():
 	add_child(body)
 	body.set_translation(Vector3(0,0,0))
 	body.generate_random_octree( 16 )
-	
-	
-	

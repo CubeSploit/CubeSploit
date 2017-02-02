@@ -38,6 +38,10 @@ const SCRIPTS = {
 	"QUAD": preload('res://world/chunk/chunk_optimizers/quad.gd')
 }
 
+const NOISE_ALGORITHMS = {
+	"SIMPLEX_NOISE": preload('res://world/noise_algorithms/simplex_noise.gd')
+}
+
 const CHUNK_OPTIMIZERS = {
 	"GREEDY_MESHING_OPTIMIZER": preload('res://world/chunk/chunk_optimizers/greedy_meshing_optimizer.gd')
 }
