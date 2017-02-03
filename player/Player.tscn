@@ -2,31 +2,44 @@
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 
-[sub_resource type="SphereShape" id=1]
+[sub_resource type="CapsuleShape" id=1]
 
-radius = 0.2
+radius = 0.41341
+height = 1.0
 
-[node name="player" type="KinematicBody"]
+[node name="player" type="RigidBody"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shapes/0/transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.464777, 0 )
 shapes/0/trigger = false
 collision/layers = 524289
 collision/mask = 1
-collide_with/static = true
-collide_with/kinematic = true
-collide_with/rigid = true
-collide_with/character = true
-collision/margin = 0.001
+mode = 2
+mass = 1.0
+friction = 0.7
+bounce = 0.2
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = 1.0
+damp_override/angular = 3.0
 script/script = ExtResource( 1 )
 
 [node name="camera" type="Camera" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 projection = 0
 fov = 60.0
 near = 0.1
@@ -41,8 +54,29 @@ v_offset = 0.0
 [node name="CollisionShape" type="CollisionShape" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.464777, 0 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
+
+[node name="cube" type="TestCube" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.1, 0, 0, 0 )
+visibility/visible = false
+layers = 1
+geometry/visible = true
+geometry/material_override = null
+geometry/cast_shadow = 1
+geometry/receive_shadows = true
+geometry/range_begin = 0.0
+geometry/range_end = 0.0
+geometry/extra_cull_margin = 0.0
+geometry/billboard = false
+geometry/billboard_y = false
+geometry/depth_scale = false
+geometry/visible_in_all_rooms = false
+geometry/use_baked_light = false
+geometry/baked_light_tex_id = 0
 
 
