@@ -70,16 +70,16 @@ params/bake_mode = 0
 params/energy = 1.0
 colors/diffuse = Color( 1, 1, 1, 1 )
 colors/specular = Color( 1, 1, 1, 1 )
-shadow/shadow = false
+shadow/shadow = true
 shadow/darkening = 0.0
-shadow/z_offset = 0.05
-shadow/z_slope_scale = 0.0
+shadow/z_offset = 0.133
+shadow/z_slope_scale = 0.879
 shadow/esm_multiplier = 60.0
 shadow/blur_passes = 1.0
 projector = null
 operator = 0
-shadow/mode = 0
-shadow/max_distance = 0.0
+shadow/mode = 3
+shadow/max_distance = 300.0
 shadow/split_weight = 0.5
 shadow/zoffset_scale = 2.0
 
@@ -87,9 +87,4 @@ shadow/zoffset_scale = 2.0
 
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
 
-[node name="camera" parent="player"]
 
-far = 50000.0
-
-
-[editable path="player"]
