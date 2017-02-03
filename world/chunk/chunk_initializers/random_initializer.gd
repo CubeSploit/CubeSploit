@@ -1,4 +1,4 @@
-static func initialize( chunk ):
+static func initialize_chunk( chunk ):
 	var size = chunk.size
 	var iterator_range = range(size)
 	var raw_data = []

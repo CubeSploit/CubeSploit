@@ -33,27 +33,27 @@ func _init( type, pos, face, x, y, w, h ):
 	self.w = w
 	self.h = h
 
-func add_to_surface(st, idx):
+func add_to_surface(st, idx, scale):
 	var uv_start = float(type-1)/(global.VoxelTypes.COUNT-1)
 	var uv_delta = 1.0/(global.VoxelTypes.COUNT-1)
-
+	
 	var v3_mult = Vector3(1,1,1)
 	if( face == global.Faces.FRONT || face == global.Faces.BACK ):
 		v3_mult = Vector3(w, h, 1)
-	if( face == global.Faces.RIGHT || face == global.Faces.LEFT ):
+	elif( face == global.Faces.RIGHT || face == global.Faces.LEFT ):
 		v3_mult = Vector3(1, h, w)
-	if( face == global.Faces.TOP || face == global.Faces.BOTTOM ):
+	elif( face == global.Faces.TOP || face == global.Faces.BOTTOM ):
 		v3_mult = Vector3(w, 1, h)
-
+	
 	st.add_normal(quads_normals[face])
-	st.add_uv( Vector2(0,0) )
+	st.add_uv( Vector2(0,0) * scale )
 	st.add_color( Color(0,uv_start,1, uv_delta) )
 	st.add_vertex(quads_vertices[face][0] * v3_mult + pos)
-	st.add_uv( Vector2(0,h) )
+	st.add_uv( Vector2(0,h) * scale )
 	st.add_vertex(quads_vertices[face][1] * v3_mult + pos)
-	st.add_uv( Vector2(w,h) )
+	st.add_uv( Vector2(w,h) * scale )
 	st.add_vertex(quads_vertices[face][2] * v3_mult + pos)
-	st.add_uv( Vector2(w,0) )
+	st.add_uv( Vector2(w,0) * scale )
 	st.add_vertex(quads_vertices[face][3] * v3_mult + pos)
 
 	st.add_index(idx + 0)
@@ -65,3 +65,27 @@ func add_to_surface(st, idx):
 	idx += 4
 
 	return idx
+
+func add_to_body(body_rid, offset, scale):
+	var v3_mult = Vector3(1,1,1)
+	var rotate_axis = Vector3(0,0,0)
+	if( face == global.Faces.FRONT || face == global.Faces.BACK ):
+		v3_mult = Vector3(w, h, 1)
+		rotate_axis = Vector3(0,0,1)
+	elif( face == global.Faces.RIGHT || face == global.Faces.LEFT ):
+		v3_mult = Vector3(1, h, w)
+		rotate_axis = Vector3(0,1,0)
+	elif( face == global.Faces.TOP || face == global.Faces.BOTTOM ):
+		v3_mult = Vector3(w, 1, h)
+		rotate_axis = Vector3(1,0,0)
+	
+	var size = Vector3(w, h, 1) * scale
+	
+	if !global.shape_cache.has(size):
+		var shape_rid = PhysicsServer.shape_create(PhysicsServer.SHAPE_BOX)
+		PhysicsServer.shape_set_data(shape_rid, size / 2)
+		global.shape_cache[size] = shape_rid
+	
+	var transform = Transform().rotated(rotate_axis, PI/2)
+	transform.origin = offset + pos + v3_mult / 2 * scale
+	PhysicsServer.body_add_shape(body_rid, global.shape_cache[size], transform)

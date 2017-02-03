@@ -16,14 +16,15 @@ func init(octree_node, body):
 	self.octree_node = octree_node
 	if( self.octree_node.parent ):
 		set_hidden(true)
-		
+
 func generate_random( ):
-	global.CHUNK_INITIALIZERS.RANDOM_INITIALIZER.initialize( self )
-	
+	global.CHUNK_INITIALIZERS.RANDOM_INITIALIZER.initialize_chunk( self )
+#	global.CHUNK_INITIALIZERS.RANDOM_PLAIN_INITIALIZER.initialize_chunk( self )
+
 func init_from_bellow( ):
-	global.CHUNK_INITIALIZERS.OCTREE_UPWARD_NAIVE_INITIALIZE.initialize( self )
-	
-							
+	global.CHUNK_INITIALIZERS.OCTREE_UPWARD_NAIVE_INITIALIZE.initialize_chunk( self )
+
+
 
 func get_neighbour_voxel_type ( current_voxel, direction ):
 	var neighbour_voxel = current_voxel + global.FaceDirections[direction]
@@ -31,20 +32,22 @@ func get_neighbour_voxel_type ( current_voxel, direction ):
 		return global.VoxelTypes.EMPTY
 	return raw_data[neighbour_voxel.x][neighbour_voxel.y][neighbour_voxel.z]
 
-func generate_mesh( voxel_material ):
-	set_mesh( global.CHUNK_OPTIMIZERS.GREEDY_MESHING_OPTIMIZER.optimize( self, voxel_material ) )
+func generate_mesh( voxel_material, scale ):
+	set_mesh( global.CHUNK_OPTIMIZERS.GREEDY_MESHING_OPTIMIZER.optimize_mesh( self, voxel_material, scale ) )
 
-
-
-
+func generate_shapes( body_rid, scale ):
+#	global.CHUNK_OPTIMIZERS.GREEDY_MESHING_OPTIMIZER.optimize_shapes( self, body_rid, scale )
+	global.CHUNK_SHAPERS.CULLING_SHAPER.optimize_shapes( self, body_rid, scale )
 
 func _on_Area_body_enter_shape( body_id, body, body_shape, area_shape ):
-	in_player_range = true
-	set_hidden(false)
-	if( octree_node.parent ):
-		octree_node.parent.child_in_range()
+	if body extends global.SCRIPTS.PLAYER:
+		in_player_range = true
+		set_hidden(false)
+		if( octree_node.parent ):
+			octree_node.parent.call_deferred("child_in_range")
 
 func _on_Area_body_exit_shape( body_id, body, body_shape, area_shape ):
-	in_player_range = false
-	if( octree_node.parent ):
-		octree_node.parent.child_out_of_range()
+	if body extends global.SCRIPTS.PLAYER:
+		in_player_range = false
+		if( octree_node.parent ):
+			octree_node.parent.call_deferred("child_out_of_range")

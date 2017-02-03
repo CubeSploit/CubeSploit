@@ -1,4 +1,4 @@
-extends Spatial
+extends KinematicBody
 
 var velocity = Vector3(0,0,0)
 var speed = 50
@@ -8,7 +8,7 @@ onready var last_mouse_pos = get_viewport().get_mouse_pos()
 onready var camera = get_node("camera")
 
 func _ready():
-	Input.set_mouse_mode( Input.MOUSE_MODE_CAPTURED )
+	Input.call_deferred("set_mouse_mode", Input.MOUSE_MODE_CAPTURED )
 	set_fixed_process(true)
 	
 	
@@ -49,7 +49,10 @@ func _fixed_process(delta):
 
 	# We want the player to move forward and backward to/from where it is looking at
 	# Don't ask me why this does the work.
-	move(get_transform().basis * camera.get_transform().basis * velocity )
+	var to_move = get_transform().basis * camera.get_transform().basis * velocity
+	to_move = move(to_move)
+	if is_colliding():
+		to_move = move(get_collision_normal().slide(to_move))
 
 	
 	

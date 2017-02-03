@@ -4,7 +4,7 @@
 
 [sub_resource type="SphereShape" id=1]
 
-radius = 1.0
+radius = 0.2
 
 [node name="player" type="KinematicBody"]
 
@@ -15,7 +15,7 @@ shape_count = 1
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 shapes/0/trigger = false
-collision/layers = 1
+collision/layers = 524289
 collision/mask = 1
 collide_with/static = true
 collide_with/kinematic = true

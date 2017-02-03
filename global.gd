@@ -35,7 +35,8 @@ const SCENES = {
 const SCRIPTS = {
 	"OCTREE_NODE": preload('res://world/body/octree_node.gd'),
 #	"OCTREE_CHUNK": preload('res://world/chunk/octree_chunk.gd'),
-	"QUAD": preload('res://world/chunk/chunk_optimizers/quad.gd')
+	"QUAD": preload('res://world/chunk/chunk_optimizers/quad.gd'),
+	"PLAYER": preload('res://player/player.gd')
 }
 
 const NOISE_ALGORITHMS = {
@@ -47,12 +48,17 @@ const CHUNK_OPTIMIZERS = {
 	"GREEDY_MESHING_OPTIMIZER": preload('res://world/chunk/chunk_optimizers/greedy_meshing_optimizer.gd')
 }
 
+const CHUNK_SHAPERS = {
+	"CULLING_SHAPER": preload('res://world/chunk/chunk_shapers/culling_shaper.gd')
+}
+
 const CHUNK_INITIALIZERS = {
 	"RANDOM_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_initializer.gd'),
 	"RANDOM_PLAIN_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_plain_initializer.gd'),
 	"OCTREE_UPWARD_NAIVE_INITIALIZE": preload('res://world/chunk/chunk_initializers/octree_upward_naive_initializer.gd')
 }
 
+var shape_cache = {}
 
 func _ready():
 	pass

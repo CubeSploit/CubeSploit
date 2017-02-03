@@ -46,7 +46,8 @@ func _init(size, body, octree_pos = Vector3(0,0,0), parent = null):
 	else:
 		chunk.generate_random()
 		
-	chunk.generate_mesh( body.voxel_material )
+	chunk.generate_mesh( body.voxel_material, size/body.chunk_size )
+	if( self.is_leaf ): chunk.generate_shapes( body.get_rid(), size/body.chunk_size )
 	chunk.set_scale( Vector3(1,1,1) * (size/body.chunk_size) )
 
 func child_in_range():

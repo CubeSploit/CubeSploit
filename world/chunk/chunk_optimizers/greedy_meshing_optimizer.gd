@@ -1,14 +1,34 @@
-static func optimize(chunk, voxel_material):
+static func optimize_shapes(chunk, body_rid, scale): # TODO
+	# Just run the algo, it would take care of the rest
+	run_algorithm(false, chunk, "_optimize_shapes_callback", {
+		body_rid = body_rid, offset = chunk.get_translation(), scale = scale
+	})
 
-	var chunk_size = chunk.size
-	var chunk_data = chunk.raw_data
-	var iterator_range = range(chunk_size)
-	
-	# Create and initialize the surfacetool and other handy variables
+static func _optimize_shapes_callback(quad, data):
+	# Add quad to body
+	quad.add_to_body(data.body_rid, data.offset, data.scale)
+
+static func optimize_mesh(chunk, voxel_material, scale):
+	# Create and initialize the surfacetool
 	var st = SurfaceTool.new()
 	st.begin(VisualServer.PRIMITIVE_TRIANGLES)
 	st.set_material( voxel_material )
-	var idx = 0
+	
+	run_algorithm(true, chunk, "_optimize_mesh_callback", {
+		st = st, idx = 0, scale = scale
+	})
+	
+	# return the mesh
+	return st.commit()
+
+static func _optimize_mesh_callback(quad, data):
+	# Add quad to surface tool
+	data.idx = quad.add_to_surface(data.st, data.idx, data.scale)
+
+static func run_algorithm(differ_types, chunk, callback, callback_data):
+	var chunk_size = chunk.size
+	var chunk_data = chunk.raw_data
+	var iterator_range = range(chunk_size)
 
 	# Create a two dimensional array of quads, will contain all the raw quads of a given face before they are optimized
 	var quads = []
@@ -32,83 +52,80 @@ static func optimize(chunk, voxel_material):
 				# If the slot isn't empty and the neighbour slot in front of it isn't full
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.FRONT) == global.VoxelTypes.EMPTY ):
 					# Register the quad
-					quads[x][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
+					quads[x][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z] if differ_types else 1, Vector3(x,y,z),global.Faces.FRONT, x, y, 1, 1)
 				else:
 					quads[x][y] = null
 		# Optimize the quads with greedy meshing
 		to_display_quads = greedy_mesh_surface(quads, chunk_size)
 		# For each quads in the list of quads to display
 		for quad in to_display_quads:
-			# Add quad to surface tool
-			idx = quad.add_to_surface(st, idx)
+			call(callback, quad, callback_data)
 
 	# Back
 	for z in iterator_range:
 		for x in iterator_range:
 			for y in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BACK) == global.VoxelTypes.EMPTY ):
-					quads[x][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
+					quads[x][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z] if differ_types else 1, Vector3(x,y,z), global.Faces.BACK, x, y, 1, 1)
 				else:
 					quads[x][y] = null
 
 		to_display_quads = greedy_mesh_surface(quads, chunk_size)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx)
+			call(callback, quad, callback_data)
 
 	# Right
 	for x in iterator_range:
 		for z in iterator_range:
 			for y in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.RIGHT) == global.VoxelTypes.EMPTY ):
-					quads[z][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
+					quads[z][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z] if differ_types else 1, Vector3(x,y,z), global.Faces.RIGHT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
 
 		to_display_quads = greedy_mesh_surface(quads, chunk_size)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx)
+			call(callback, quad, callback_data)
 
 	# Left
 	for x in iterator_range:
 		for z in iterator_range:
 			for y in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.LEFT) == global.VoxelTypes.EMPTY ):
-					quads[z][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
+					quads[z][y] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z] if differ_types else 1, Vector3(x,y,z), global.Faces.LEFT, z, y, 1, 1)
 				else:
 					quads[z][y] = null
 
 		to_display_quads = greedy_mesh_surface(quads, chunk_size)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx)
+			call(callback, quad, callback_data)
 
 	# Top
 	for y in iterator_range:
 		for x in iterator_range:
 			for z in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.TOP) == global.VoxelTypes.EMPTY ):
-					quads[x][z] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
+					quads[x][z] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z] if differ_types else 1, Vector3(x,y,z), global.Faces.TOP, x, z, 1, 1)
 				else:
 					quads[x][z] = null
 
 		to_display_quads = greedy_mesh_surface(quads, chunk_size)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx)
+			call(callback, quad, callback_data)
 			
 	# Bottom
 	for y in iterator_range:
 		for x in iterator_range:
 			for z in iterator_range:
 				if( chunk_data[x][y][z] != global.VoxelTypes.EMPTY && chunk.get_neighbour_voxel_type(Vector3(x,y,z), global.Faces.BOTTOM) == global.VoxelTypes.EMPTY ):
-					quads[x][z] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z], Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
+					quads[x][z] = global.SCRIPTS.QUAD.new(chunk_data[x][y][z] if differ_types else 1, Vector3(x,y,z), global.Faces.BOTTOM, x, z, 1, 1)
 				else:
 					quads[x][z] = null
 
 		to_display_quads = greedy_mesh_surface(quads, chunk_size)
 		for quad in to_display_quads:
-			idx = quad.add_to_surface(st, idx)
-
-	# return the mesh
-	return st.commit()
+			call(callback, quad, callback_data)
+	
 
 
 
