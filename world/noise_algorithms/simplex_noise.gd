@@ -78,7 +78,20 @@ static func dot(v1, v2):
 		acc += v1[i] * v2[i]
 
 	return acc
-	
+
+static func simplex_noise( coords, scale ):
+	if( coords.size() < 2 ):
+		printerr("SimplexNoise " + coords.size() + "D not implemented")
+		return 0
+	elif ( coords.size() == 2 ):
+		return simplex_noise_2d( coords[0], coords[1] )
+	elif( coords.size() == 3 ):
+		return simplex_noise_3d( coords[0], coords[1], coords[2] )
+	elif ( coords.size() == 4 ):
+		return simplex_noise_4d( coords[0], coords[1], coords[2], coords[3] )
+	else:
+		printerr("SimplexNoise " + coords.size() + "D not implemented, using 4d instead")
+		return simplex_noise_4d( coords[0], coords[1], coords[2], coords[3] )
 
 # 2D simplex noise
 static func simplex_noise_2d(xin, yin):

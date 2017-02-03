@@ -39,7 +39,8 @@ const SCRIPTS = {
 }
 
 const NOISE_ALGORITHMS = {
-	"SIMPLEX_NOISE": preload('res://world/noise_algorithms/simplex_noise.gd')
+	"SIMPLEX_NOISE": preload('res://world/noise_algorithms/simplex_noise.gd'),
+	"FRACTAL_BROWNIAN_MOTION": preload('res://world/noise_algorithms/fractal_brownian_motion.gd')
 }
 
 const CHUNK_OPTIMIZERS = {
