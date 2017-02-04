@@ -2,9 +2,10 @@
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 
-[sub_resource type="SphereShape" id=1]
+[sub_resource type="CapsuleShape" id=1]
 
-radius = 1.0
+radius = 0.41341
+height = 1.0
 
 [node name="player" type="RigidBody"]
 
