@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 
@@ -7,15 +7,22 @@
 radius = 0.41341
 height = 1.0
 
+[sub_resource type="BoxShape" id=2]
+
+extents = Vector3( 0.2, 0.01, 0.2 )
+
 [node name="player" type="RigidBody"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 input/ray_pickable = true
 input/capture_on_drag = false
-shape_count = 1
+shape_count = 2
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.464777, 0 )
 shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0 )
+shapes/1/trigger = true
 collision/layers = 524289
 collision/mask = 1
 mode = 2
@@ -25,8 +32,8 @@ bounce = 0.2
 gravity_scale = 1.0
 custom_integrator = false
 continuous_cd = false
-contacts_reported = 0
-contact_monitor = false
+contacts_reported = 1
+contact_monitor = true
 sleeping = false
 can_sleep = true
 axis_lock = 0
@@ -59,6 +66,14 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
+[node name="ground_collision_shape" type="CollisionShape" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0 )
+shape = SubResource( 2 )
+trigger = true
+_update_shape_index = 1
+
 [node name="cube" type="TestCube" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
@@ -78,5 +93,9 @@ geometry/depth_scale = false
 geometry/visible_in_all_rooms = false
 geometry/use_baked_light = false
 geometry/baked_light_tex_id = 0
+
+[connection signal="body_enter_shape" from="." to="." method="_on_player_body_enter_shape"]
+
+[connection signal="body_exit_shape" from="." to="." method="_on_player_body_exit_shape"]
 
 
