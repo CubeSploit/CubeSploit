@@ -91,7 +91,8 @@ func _fixed_process(delta):
 	observed_gravity = Vector3()
 
 func apply_gravity(pos, impulse):
-#	apply_impulse(pos, impulse)
+	if( !free_fly ):
+		apply_impulse(pos, impulse)
 	observed_gravity += impulse
 
 
