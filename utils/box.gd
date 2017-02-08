@@ -1,11 +1,7 @@
 
 var type = global.VoxelTypes.EMPTY
 var pos = Vector3(0,0,0)
-var face = global.Faces.FRONT
-var x = 0
-var y = 0
-var w = 1
-var h = 1
+var extents = Vector3(0.5,0.5,0.5)
 
 const quads_vertices = [
 	[Vector3(0,0,1), Vector3(0,1,1), Vector3(1,1,1), Vector3(1,0,1)], # Front
@@ -24,26 +20,34 @@ const quads_normals = [
 	Vector3(0,-1,0) # Bottom
 ]
 
-func _init( type, pos, face, x, y, w, h ):
+func _init( type, pos, extents ):
 	self.type = type
 	self.pos = pos
-	self.face = face
-	self.x = x
-	self.y = y
-	self.w = w
-	self.h = h
+	self.extents = extents
+	
 
 func add_to_surface(st, idx, scale):
+
+	idx = add_quad_to_surface(st, idx, scale, global.Faces.FRONT, extents[0]*2, extents[1]*2, extents[2]*2)
+	idx = add_quad_to_surface(st, idx, scale, global.Faces.BACK, extents[0]*2, extents[1]*2, extents[2]*2)
+	idx = add_quad_to_surface(st, idx, scale, global.Faces.RIGHT, extents[2]*2, extents[1]*2, extents[0]*2)
+	idx = add_quad_to_surface(st, idx, scale, global.Faces.LEFT, extents[2]*2, extents[1]*2, extents[0]*2)
+	idx = add_quad_to_surface(st, idx, scale, global.Faces.TOP, extents[0]*2, extents[2]*2, extents[1]*2)
+	idx = add_quad_to_surface(st, idx, scale, global.Faces.BOTTOM, extents[0]*2, extents[2]*2, extents[1]*2)
+	return idx
+
+
+func add_quad_to_surface(st, idx, scale, face, w, h, l):
 	var uv_start = float(type-1)/(global.VoxelTypes.COUNT-1)
 	var uv_delta = 1.0/(global.VoxelTypes.COUNT-1)
 	
 	var v3_mult = Vector3(1,1,1)
 	if( face == global.Faces.FRONT || face == global.Faces.BACK ):
-		v3_mult = Vector3(w, h, 1)
+		v3_mult = Vector3(w, h, l)
 	elif( face == global.Faces.RIGHT || face == global.Faces.LEFT ):
-		v3_mult = Vector3(1, h, w)
+		v3_mult = Vector3(l, h, w)
 	elif( face == global.Faces.TOP || face == global.Faces.BOTTOM ):
-		v3_mult = Vector3(w, 1, h)
+		v3_mult = Vector3(w, l, h)
 	
 	st.add_normal(quads_normals[face])
 	st.add_uv( Vector2(0,0) * scale )
@@ -65,27 +69,14 @@ func add_to_surface(st, idx, scale):
 	idx += 4
 
 	return idx
-
+	
 func add_to_body(body_rid, offset, scale):
-	var v3_mult = Vector3(1,1,1)
-	var rotate_axis = Vector3(0,0,0)
-	if( face == global.Faces.FRONT || face == global.Faces.BACK ):
-		v3_mult = Vector3(w, h, 1)
-		rotate_axis = Vector3(0,0,1)
-	elif( face == global.Faces.RIGHT || face == global.Faces.LEFT ):
-		v3_mult = Vector3(1, h, w)
-		rotate_axis = Vector3(0,1,0)
-	elif( face == global.Faces.TOP || face == global.Faces.BOTTOM ):
-		v3_mult = Vector3(w, 1, h)
-		rotate_axis = Vector3(1,0,0)
-	
-	var size = Vector3(w, h, 1) * scale
-	
+	var size = extents*2
 	if !global.shape_cache.has(size):
 		var shape_rid = PhysicsServer.shape_create(PhysicsServer.SHAPE_BOX)
-		PhysicsServer.shape_set_data(shape_rid, size / 2)
+		PhysicsServer.shape_set_data(shape_rid, extents)
 		global.shape_cache[size] = shape_rid
 	
-	var transform = Transform().rotated(rotate_axis, PI/2)
-	transform.origin = offset + pos + v3_mult / 2 * scale
+	var transform = Transform()
+	transform.origin = offset + pos + extents * scale
 	PhysicsServer.body_add_shape(body_rid, global.shape_cache[size], transform)

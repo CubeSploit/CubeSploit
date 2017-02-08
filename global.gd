@@ -35,24 +35,22 @@ const SCENES = {
 const SCRIPTS = {
 	"OCTREE_NODE": preload('res://world/body/octree_node.gd'),
 #	"OCTREE_CHUNK": preload('res://world/chunk/octree_chunk.gd'),
-	"QUAD": preload('res://world/chunk/chunk_optimizers/quad.gd'),
+	"QUAD": preload('res://utils/quad.gd'),
+	"BOX": preload('res://utils/box.gd'),
 	"PLAYER": preload('res://player/player.gd')
 }
 
+const MESHING_ALGORITHMS = {
+	"CULLING": preload('res://algorithms/meshing_algorithms/culling.gd'),
+	"GREEDY_MESHING": preload('res://algorithms/meshing_algorithms/greedy_meshing.gd')
+}
 const NOISE_ALGORITHMS = {
-	"SIMPLEX_NOISE": preload('res://world/noise_algorithms/simplex_noise.gd'),
-	"FRACTAL_BROWNIAN_MOTION": preload('res://world/noise_algorithms/fractal_brownian_motion.gd')
-}
-
-const CHUNK_OPTIMIZERS = {
-	"GREEDY_MESHING_OPTIMIZER": preload('res://world/chunk/chunk_optimizers/greedy_meshing_optimizer.gd')
-}
-
-const CHUNK_SHAPERS = {
-	"CULLING_SHAPER": preload('res://world/chunk/chunk_shapers/culling_shaper.gd')
+	"SIMPLEX_NOISE": preload('res://algorithms/noise_algorithms/simplex_noise.gd'),
+	"FRACTAL_BROWNIAN_MOTION": preload('res://algorithms/noise_algorithms/fractal_brownian_motion.gd')
 }
 
 const CHUNK_INITIALIZERS = {
+	"ONE_TYPE_INITIALIZER": preload('res://world/chunk/chunk_initializers/one_type_initializer.gd'),
 	"RANDOM_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_initializer.gd'),
 	"RANDOM_PLAIN_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_plain_initializer.gd'),
 	"OCTREE_UPWARD_NAIVE_INITIALIZE": preload('res://world/chunk/chunk_initializers/octree_upward_naive_initializer.gd')
