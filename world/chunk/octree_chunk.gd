@@ -37,17 +37,10 @@ func get_neighbour_voxel_type ( current_voxel, direction ):
 
 
 func generate_mesh( voxel_material, scale ):
-
-#	print("meshing")
 #	var shapes = global.MESHING_ALGORITHMS.CULLING.culling_2d( raw_data, size, global.VoxelTypes.EMPTY)
-#	print("culling 2d ", shapes.size())
 	var shapes = global.MESHING_ALGORITHMS.GREEDY_MESHING.greedy_meshing_2d( raw_data, size, true, global.VoxelTypes.EMPTY)
-#	print("greedy meshing 2d ", shapes.size())
 #	var shapes = global.MESHING_ALGORITHMS.CULLING.culling_3d( raw_data, size, global.VoxelTypes.EMPTY)
-#	print("culling 3d ", shapes.size()*6)
 #	var shapes = global.MESHING_ALGORITHMS.GREEDY_MESHING.greedy_meshing_3d( raw_data, size, true, global.VoxelTypes.EMPTY)
-#	print("greedy meshing 3d ", shapes.size()*6)
-#	print(" ")
 
 	var shapes_iterator_range = range(shapes.size())
 	var st = SurfaceTool.new()
@@ -58,25 +51,15 @@ func generate_mesh( voxel_material, scale ):
 		idx = shapes[i].add_to_surface(st, idx, scale)
 	set_mesh(st.commit())
 	
-	pass
 func generate_shapes( body_rid, scale ):
-#	print("shaping")
 #	var shapes = global.MESHING_ALGORITHMS.CULLING.culling_2d( raw_data, size, global.VoxelTypes.EMPTY)
-#	print("culling 2d ", shapes.size())
 #	var shapes = global.MESHING_ALGORITHMS.GREEDY_MESHING.greedy_meshing_2d( raw_data, size, false, global.VoxelTypes.EMPTY)
-#	print("greedy meshing 2d ", shapes.size())
 #	var shapes = global.MESHING_ALGORITHMS.CULLING.culling_3d( raw_data, size, global.VoxelTypes.EMPTY)
-#	print("culling 3d ", shapes.size())
 	var shapes = global.MESHING_ALGORITHMS.GREEDY_MESHING.greedy_meshing_3d( raw_data, size, false, global.VoxelTypes.EMPTY)
-#	print("greedy meshing 3d ", shapes.size())
-#	print(" ")
 	
 	var shapes_iterator_range = range(shapes.size())
 	for i in shapes_iterator_range:
 		shapes[i].add_to_body(body_rid, get_translation(), scale)
-	
-	
-	
 
 func _on_Area_body_enter_shape( body_id, body, body_shape, area_shape ):
 	if body extends global.SCRIPTS.PLAYER:

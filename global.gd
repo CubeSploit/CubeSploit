@@ -23,10 +23,11 @@ const FaceDirections = [
 
 const VoxelTypes = {
 	EMPTY = 0,
-	BLUE = 1,
-	GREEN = 2,
-	RED = 3,
-	COUNT = 4
+	WATER = 1,
+	STONE = 2,
+	DIRT = 3,
+	GRASS = 4,
+	COUNT = 5
 }
 
 const SCENES = {
