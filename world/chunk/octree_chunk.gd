@@ -30,6 +30,7 @@ func init(octree_node, body):
 
 func generate_with_body_initializer( body_initializer_name ):
 	global.BODY_INITIALIZERS[body_initializer_name].initialize_chunk( body, self)
+#	thread_pool.add_task( global.BODY_INITIALIZERS[body_initializer_name], "initialize_chunk", [body, self])
 
 func generate_empty():
 	global.CHUNK_INITIALIZERS.EMPTY_INITIALIZER.initialize_chunk( self )

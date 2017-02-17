@@ -62,6 +62,7 @@ func init( body_size, chunk_size ):
 	var body_coord_range = range(-body_diameter/2, body_diameter/2)
 	
 	octree_root.init_leaf( "DEFAULT_INITIALIZER")
+#	thread_pool.wait_to_finish()
 #	octree_root.init_leaf_random()
 	print("leaves chunk initialized")
 

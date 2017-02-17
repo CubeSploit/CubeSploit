@@ -1,12 +1,15 @@
 
 
 static func initialize_chunk( body, chunk ):
+	var octree_pos = chunk.octree_node.octree_pos
+	var chunk_size = chunk.size
+	var iterator_range = range(chunk_size)
 	# the radius of the body is the ground level
 	var body_radius = body.body_size/2
 	# the maximum height generated blocks can achieve
 	var body_max_radius = body_radius + body_radius/2
-	var chunk_min_axis_val = chunk.octree_node.octree_pos[chunk.octree_node.octree_pos.min_axis()] * chunk.size
-	var chunk_max_axis_val = chunk.octree_node.octree_pos[chunk.octree_node.octree_pos.max_axis()] * (chunk.size) + chunk.size
+	var chunk_min_axis_val = octree_pos[octree_pos.min_axis()] * chunk_size
+	var chunk_max_axis_val = octree_pos[octree_pos.max_axis()] * (chunk_size) + chunk_size
 
 	# any chunk which extrema's coordinates aren't included in the body's max radius aren't going to contain anything, stop the function
 	if( (chunk_min_axis_val < -body_max_radius || chunk_min_axis_val >= body_max_radius) &&
@@ -14,23 +17,21 @@ static func initialize_chunk( body, chunk ):
 		!( chunk_min_axis_val < -body_max_radius && chunk_max_axis_val >= body_max_radius )):
 		return
 		
-	var size = chunk.size
-	var iterator_range = range(size)
 	# will contain the raw data of the chunk
 	var raw_data = []
-	raw_data.resize(size)
+	raw_data.resize(chunk_size)
 
 
 	# function reference to the noise function that will be used to generate height map
 	var noise_f = funcref( global.NOISE_ALGORITHMS.SIMPLEX_NOISE, "simplex_noise" )
 	# the coordinates of the chunk according to the body
-	var chunk_coords = chunk.octree_node.octree_pos*chunk.size
+	var chunk_coords = octree_pos*chunk_size
 	for x in iterator_range:
 		raw_data[x] = []
-		raw_data[x].resize(size)
+		raw_data[x].resize(chunk_size)
 		for y in iterator_range:
 			raw_data[x][y] = []
-			raw_data[x][y].resize(size)
+			raw_data[x][y].resize(chunk_size)
 			for z in iterator_range:
 				# the coordinates of the voxel according to the body
 				var coords = Vector3(x,y,z) + chunk_coords
