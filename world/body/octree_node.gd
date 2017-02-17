@@ -7,7 +7,6 @@ var parent
 
 var pos
 var depth
-var leaf_depth
 var octree_pos
 
 var chunk
@@ -44,7 +43,6 @@ func _init(size, body, pos = Vector3(-0.5,-0.5,-0.5), parent = null):
 		
 	if( size == body.chunk_size ):
 		is_leaf = true
-		leaf_depth = depth
 	
 	self.size = size
 	self.body = body
@@ -71,9 +69,6 @@ func _init(size, body, pos = Vector3(-0.5,-0.5,-0.5), parent = null):
 				for z in range(2):
 					self.children[x][y][z] = OctreeNode.new(size/2, body, Vector3(x,y,z), self)
 	chunk.set_scale( Vector3(1,1,1) * (size/body.chunk_size) )
-	
-	if( !is_leaf ):
-		leaf_depth = children[0][0][0].leaf_depth
 
 
 func init_leaf(body_initializer_name):
