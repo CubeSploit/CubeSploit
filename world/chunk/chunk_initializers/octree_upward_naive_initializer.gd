@@ -2,6 +2,17 @@ static func initialize_chunk( chunk ):
 	var size = chunk.size
 	var iterator_range = chunk.iterator_range
 	
+	var children = chunk.octree_node.children
+	if( !children[0][0][0].chunk.initialized &&
+	!children[0][0][1].chunk.initialized &&
+	!children[0][1][0].chunk.initialized &&
+	!children[0][1][1].chunk.initialized &&
+	!children[1][0][0].chunk.initialized &&
+	!children[1][0][1].chunk.initialized &&
+	!children[1][1][0].chunk.initialized &&
+	!children[1][1][1].chunk.initialized ):
+		return
+	
 	var raw_data = []
 	raw_data.resize(size)
 	for x in iterator_range:
@@ -22,7 +33,7 @@ static func initialize_chunk( chunk ):
 					child_octree_pos.z = 1
 					
 				# getting the child
-				var child = chunk.octree_node.children[child_octree_pos.x][child_octree_pos.y][child_octree_pos.z]
+				var child = children[child_octree_pos.x][child_octree_pos.y][child_octree_pos.z]
 				var child_chunk = child.chunk
 					
 				# computing the starting pos of the child
@@ -34,6 +45,8 @@ static func initialize_chunk( chunk ):
 				for xc in range(2):
 					for yc in range(2):
 						for zc in range(2):
+							if( !child_chunk.initialized ):
+								continue
 							var child_block_type = child_chunk.raw_data[child_start_pos.x+xc][child_start_pos.y+yc][child_start_pos.z+zc]
 							if( !block_list.has( child_block_type ) ):
 								block_list[child_block_type] = 0
@@ -54,4 +67,5 @@ static func initialize_chunk( chunk ):
 					raw_data[x][y][z] = best_block_type
 					
 	chunk.raw_data = raw_data
+	chunk.initialized = true
 		

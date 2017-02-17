@@ -5,9 +5,9 @@ var OctreeNode = global.SCRIPTS.OCTREE_NODE
 export(Material) var voxel_material
 export(Material) var voxel_material_text
 
+var body_size = 16
 var chunk_size = 8
-var chunks = [] # 3D array containing the chunks of the body
-var center = Vector3()
+var center = Vector3(0,0,0)
 var mass = 0
 var octree_root
 
@@ -36,9 +36,39 @@ func _fixed_process(delta):
 
 func generate_random_octree( body_size ):
 	octree_root = OctreeNode.new(body_size, self)
-	center = Vector3(1,1,1) * body_size / 2
 	mass = body_size * body_size * body_size
 	
 	var shape = SphereShape.new()
 	shape.set_radius(body_size * 10)
 	gravity_area.add_shape(shape)
+	
+func init( body_size, chunk_size ):
+	self.body_size = body_size
+	self.chunk_size = chunk_size
+	
+	mass = body_size * body_size * body_size
+	var shape = SphereShape.new()
+	shape.set_radius(body_size * 10)
+	gravity_area.add_shape(shape)
+	
+	octree_root = OctreeNode.new(body_size*2, self)
+#	octree_root = OctreeNode.new(body_size*chunk_size, self) definitively too computationally intensive
+#	octree_root = OctreeNode.new(body_size, self) not enough to display the height generated
+	print("octree created")
+
+	# body is radius body_size/2 and height can variate to body_size/4
+	var body_max_height = body_size/2 + body_size/4
+	var body_diameter = (body_size + body_max_height * 2)
+	var body_coord_range = range(-body_diameter/2, body_diameter/2)
+	
+	octree_root.init_leaf( "DEFAULT_INITIALIZER")
+#	octree_root.init_leaf_random()
+	print("leaves chunk initialized")
+
+	octree_root.init_from_bellow()
+	print("octree chunks initialized")
+	octree_root.generate_mesh()
+	print("mesches created")
+	octree_root.generate_shapes()
+	print("shapes created")
+	

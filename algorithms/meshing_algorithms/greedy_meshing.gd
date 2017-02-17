@@ -244,7 +244,7 @@ static func greedy_meshing_2d(data, size, differ_types = false, empty_value = 0)
 	# Back
 		for x in iterator_range:
 			for y in iterator_range:
-				neighbour_voxel_type = data[x][y][z-1] if z-1 > 0 else empty_value
+				neighbour_voxel_type = data[x][y][z-1] if z-1 >= 0 else empty_value
 				if( data[x][y][z] != empty_value && neighbour_voxel_type == empty_value ):
 					quad_type = data[x][y][z] if differ_types else 1
 					quads[x][y] = QuadClass.new(quad_type, Vector3(x,y,z), global.Faces.BACK, 1, 1)
@@ -271,7 +271,7 @@ static func greedy_meshing_2d(data, size, differ_types = false, empty_value = 0)
 	# Left
 		for z in iterator_range:
 			for y in iterator_range:
-				neighbour_voxel_type = data[x-1][y][z] if x-1 > 0 else empty_value
+				neighbour_voxel_type = data[x-1][y][z] if x-1 >= 0 else empty_value
 				if( data[x][y][z] != empty_value && neighbour_voxel_type == empty_value ):
 					quad_type = data[x][y][z] if differ_types else 1
 					quads[z][y] = QuadClass.new(quad_type, Vector3(x,y,z), global.Faces.LEFT, 1, 1)
@@ -298,7 +298,7 @@ static func greedy_meshing_2d(data, size, differ_types = false, empty_value = 0)
 	# Bottom
 		for x in iterator_range:
 			for z in iterator_range:
-				neighbour_voxel_type = data[x][y-1][z] if y-1 > 0 else empty_value
+				neighbour_voxel_type = data[x][y-1][z] if y-1 >= 0 else empty_value
 				if( data[x][y][z] != empty_value && neighbour_voxel_type == empty_value ):
 					quad_type = data[x][y][z] if differ_types else 1
 					quads[x][z] = QuadClass.new(quad_type, Vector3(x,y,z), global.Faces.BOTTOM, 1, 1)

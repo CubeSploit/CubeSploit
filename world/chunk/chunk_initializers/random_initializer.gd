@@ -15,3 +15,4 @@ static func initialize_chunk( chunk ):
 				if( randf()> 0.6 ):
 					raw_data[x][y][z] = global.VoxelTypes.EMPTY
 	chunk.raw_data = raw_data
+	chunk.initialized = true

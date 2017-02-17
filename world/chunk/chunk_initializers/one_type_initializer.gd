@@ -14,3 +14,4 @@ static func initialize_chunk( chunk ):
 				raw_data[x][y][z] = 1
 				
 	chunk.raw_data = raw_data
+	chunk.initialized = true

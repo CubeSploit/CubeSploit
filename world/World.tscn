@@ -85,6 +85,6 @@ shadow/zoffset_scale = 2.0
 
 [node name="player" parent="." instance=ExtResource( 3 )]
 
-transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0 )
 
 

@@ -11,7 +11,7 @@ static func initialize_chunk( chunk ):
 			raw_data[x][y] = []
 			raw_data[x][y].resize(size)
 			for z in iterator_range:
-				raw_data[x][y][z] = (randi()%(global.VoxelTypes.COUNT-1))+1
+				raw_data[x][y][z] = global.VoxelTypes.EMPTY
 				
 	chunk.raw_data = raw_data
 	chunk.initialized = true
