@@ -10,30 +10,29 @@ var observed_gravity = Vector3()
 var is_grounded = false
 var free_fly = false
 
+var relative_mouse_movement = Vector2()
+
 onready var last_mouse_pos = get_viewport().get_mouse_pos()
 onready var camera = get_node("camera")
 
 func _ready():
 	Input.call_deferred("set_mouse_mode", Input.MOUSE_MODE_CAPTURED )
 	set_fixed_process(true)
+	set_process_input(true)
+
+func _input(event):
+	#Get the relative mouse motion
+	if(event.type == InputEvent.MOUSE_MOTION):
+		relative_mouse_movement.x += event.relative_x
+		relative_mouse_movement.y += event.relative_y
 
 func _fixed_process(delta):
-	# Getting movement of mouse for this current frame
-	# get mouse pos
-	var current_mouse_pos = get_viewport().get_mouse_pos()
-	# make difference with last mouse pos
-	var delta_mouse_pos =  current_mouse_pos - last_mouse_pos
-	# if difference is too big then it's a game beginning artifact, ignore it
-	if( current_mouse_pos.distance_to(last_mouse_pos) > 1000 ):
-		delta_mouse_pos = Vector2(0,0)
-	# memorize current mouse pos
-	last_mouse_pos = current_mouse_pos
-
 	# apply rotation of the player according to mouse horizontal movements
-	rotate_y( delta_mouse_pos.x * angular_speed * delta )
+	rotate_y( relative_mouse_movement.x * angular_speed * delta )
 	# apply rotation of the camera according to mouse vertical movements
-	camera.rotate_x( delta_mouse_pos.y * angular_speed * delta )
-	
+	camera.rotate_x( relative_mouse_movement.y * angular_speed * delta )
+	#reset mouse movement
+	relative_mouse_movement = Vector2(0,0)
 	# here we handle rotation of players according to gravity
 	# if there's gravity applied to the player
 	if( observed_gravity.length() != 0 ):
