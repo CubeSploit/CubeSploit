@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=1]
 
-[ext_resource path="res://menus/EscMenu.gd" type="Script" id=1]
+[ext_resource path="res://menus/esc_menu.gd" type="Script" id=1]
 
-[node name="EscMenu" type="Control"]
+[node name="EscMenu" type="Container"]
 
 process/pause_mode = 2
 focus/ignore_mouse = false
