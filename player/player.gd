@@ -1,6 +1,6 @@
 extends RigidBody
 
-var speed = 50
+var walking_speed = 30
 var jump_force = 1000
 var rerotation_speed = 15
 # the force environment applies on the player, usually it is gravity
@@ -43,6 +43,7 @@ func _fixed_process(delta):
 	
 	
 	var velocity_change = Vector3()
+	var speed = walking_speed if !free_fly else player_settings.free_fly_speed
 	
 	if( Input.is_action_pressed("move_forward") ):
 		velocity_change.z = - speed * delta

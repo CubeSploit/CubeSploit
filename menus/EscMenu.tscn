@@ -126,7 +126,6 @@ margin/bottom = 400.0
 
 [node name="mouse_sensitivity_slider" type="Panel" parent="main_panel/controls_panel"]
 
-editor/display_folded = true
 visibility/self_opacity = 0.0
 anchor/right = 1
 focus/ignore_mouse = false
@@ -165,11 +164,62 @@ margin/left = 160.0
 margin/top = 0.0
 margin/right = 10.0
 margin/bottom = 20.0
-range/min = 0.0
+range/min = 0.01
 range/max = 0.5
 range/step = 0.01
 range/page = 0.0
-range/value = 0.05
+range/value = 0.1
+range/exp_edit = false
+range/rounded = false
+tick_count = 0
+ticks_on_borders = false
+focus_mode = 2
+
+[node name="free_fly_speed" type="Panel" parent="main_panel/controls_panel"]
+
+visibility/self_opacity = 0.0
+anchor/right = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 10.0
+margin/top = 160.0
+margin/right = 10.0
+margin/bottom = 180.0
+
+[node name="free_fly_speed_label" type="Label" parent="main_panel/controls_panel/free_fly_speed"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 0.0
+margin/right = 150.0
+margin/bottom = 20.0
+text = "Free fly speed"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="free_fly_speed_slider" type="HSlider" parent="main_panel/controls_panel/free_fly_speed"]
+
+anchor/right = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 160.0
+margin/top = 0.0
+margin/right = 10.0
+margin/bottom = 20.0
+range/min = 1.0
+range/max = 150.0
+range/step = 10.0
+range/page = 0.0
+range/value = 10.0
 range/exp_edit = false
 range/rounded = false
 tick_count = 0

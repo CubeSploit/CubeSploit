@@ -4,6 +4,7 @@ onready var menu_panel = get_node('main_panel/menu_panel')
 onready var controls_panel = get_node('main_panel/controls_panel')
 
 onready var mouse_sensitivity_slider = get_node("main_panel/controls_panel/mouse_sensitivity_slider/mouse_sensitivity_slider")
+onready var free_fly_speed_slider = get_node("main_panel/controls_panel/free_fly_speed/free_fly_speed_slider")
 
 const States = {
 	"HIDDEN": 0,
@@ -49,6 +50,7 @@ func _on_controls_menu_enter():
 	controls_panel.set_hidden(false)
 	
 	mouse_sensitivity_slider.set_value( player_settings.mouse_angular_speed )
+	free_fly_speed_slider.set_value( player_settings.free_fly_speed )
 	
 func _on_controls_menu_exit():
 	state = States.DEFAULT
@@ -56,6 +58,7 @@ func _on_controls_menu_exit():
 	controls_panel.set_hidden(true)
 	
 	player_settings.mouse_angular_speed = mouse_sensitivity_slider.get_value()
+	player_settings.free_fly_speed = free_fly_speed_slider.get_value()
 	
 
 func _on_controls_button_button_down():
