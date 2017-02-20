@@ -2,7 +2,6 @@ extends RigidBody
 
 var speed = 50
 var jump_force = 1000
-var angular_speed = 0.05
 var rerotation_speed = 15
 # the force environment applies on the player, usually it is gravity
 var observed_gravity = Vector3()
@@ -28,9 +27,9 @@ func _input(event):
 
 func _fixed_process(delta):
 	# apply rotation of the player according to mouse horizontal movements
-	rotate_y( relative_mouse_movement.x * angular_speed * delta )
+	rotate_y( relative_mouse_movement.x * player_settings.mouse_angular_speed * delta )
 	# apply rotation of the camera according to mouse vertical movements
-	camera.rotate_x( relative_mouse_movement.y * angular_speed * delta )
+	camera.rotate_x( relative_mouse_movement.y * player_settings.mouse_angular_speed * delta )
 	#reset mouse movement
 	relative_mouse_movement = Vector2(0,0)
 	# here we handle rotation of players according to gravity
