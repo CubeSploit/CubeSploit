@@ -43,6 +43,8 @@ func _on_esc_menu_exit():
 	get_tree().set_pause(false)
 	# capture mouse
 	Input.call_deferred("set_mouse_mode", Input.MOUSE_MODE_CAPTURED )
+	# save player settings
+	player_settings.save_settings()
 
 func _on_controls_menu_enter():
 	state = States.CONTROLS

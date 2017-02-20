@@ -1,5 +1,7 @@
 extends Node
 
+const game_version = 0.1
+
 const Faces = {
 	FRONT = 0,
 	BACK = 1,
