@@ -1,10 +1,10 @@
 extends Container
 
-onready var menu_panel = get_node('main_panel/menu_panel')
-onready var controls_panel = get_node('main_panel/controls_panel')
+onready var menu_panel = get_node('menu_panel')
+onready var controls_panel = get_node('controls_panel')
 
-onready var mouse_sensitivity_slider = get_node("main_panel/controls_panel/mouse_sensitivity_slider/mouse_sensitivity_slider")
-onready var free_fly_speed_slider = get_node("main_panel/controls_panel/free_fly_speed/free_fly_speed_slider")
+onready var mouse_sensitivity_slider = get_node("controls_panel/mouse_sensitivity_slider/mouse_sensitivity_slider")
+onready var free_fly_speed_slider = get_node("controls_panel/free_fly_speed/free_fly_speed_slider")
 
 const States = {
 	"HIDDEN": 0,
