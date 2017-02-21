@@ -15,6 +15,8 @@ func _ready():
 		# else load them from the existing file
 		load_settings()
 		
+	player_settings_file.close()
+		
 func save_settings():
 	# open file and empties it
 	var player_settings_file = File.new()
@@ -27,6 +29,7 @@ func save_settings():
 	}
 	# write data in json format in the file
 	player_settings_file.store_line(data.to_json())
+	player_settings_file.close()
 
 func load_settings():
 	# open file in read mode
@@ -39,6 +42,8 @@ func load_settings():
 	for key in data:
 		if( get(key) ):
 			self[key] = data[key]
+			
+	player_settings_file.close()
 
 func _exit_tree():
 	save_settings()
