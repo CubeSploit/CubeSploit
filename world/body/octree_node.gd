@@ -71,29 +71,22 @@ func _init(size, body, pos = Vector3(-0.5,-0.5,-0.5), parent = null):
 	chunk.set_scale( Vector3(1,1,1) * (size/body.chunk_size) )
 
 
-func init_leaf(body_initializer_name):
+func init_leaves(chunk_initializer_name):
 	if( !self.is_leaf ):
 		for x in range(2):
 			for y in range(2):
 				for z in range(2):
-					children[x][y][z].init_leaf(body_initializer_name)
+					children[x][y][z].init_leaves(chunk_initializer_name)
 	else:
-		chunk.generate_with_body_initializer(body_initializer_name)
-func init_leaf_random():
+		chunk.initialize(chunk_initializer_name)
+func init_nodes(chunk_initializer_name):
 	if( !self.is_leaf ):
 		for x in range(2):
 			for y in range(2):
 				for z in range(2):
-					children[x][y][z].init_leaf_random()
-	else:
-		chunk.generate_random()
-func init_from_bellow():
-	if( !self.is_leaf ):
-		for x in range(2):
-			for y in range(2):
-				for z in range(2):
-					children[x][y][z].init_from_bellow()
-		chunk.init_from_bellow()
+					children[x][y][z].init_nodes(chunk_initializer_name)
+		chunk.initialize(chunk_initializer_name)
+
 func generate_mesh():
 	if( !is_leaf ):
 		for x in range(2):
@@ -109,31 +102,3 @@ func generate_shapes():
 					children[x][y][z].generate_shapes( )
 	else:
 		chunk.generate_shapes( body.get_rid() )
-		
-		
-		
-		
-		
-		
-func child_in_range():
-	chunk.set_hidden(true)
-	for x in range(2):
-		for y in range(2):
-			for z in range(2):
-				children[x][y][z].chunk.set_hidden(false)
-
-
-func child_out_of_range():
-#	chunk.set_hidden(true)
-	var children_out_of_range_count = 0
-	for x in range(2):
-		for y in range(2):
-			for z in range(2):
-				if( !children[x][y][z].chunk.in_player_range ):
-					children_out_of_range_count +=1
-	if( children_out_of_range_count == 8 ):
-		chunk.set_hidden(false)
-		for x in range(2):
-			for y in range(2):
-				for z in range(2):
-					children[x][y][z].chunk.set_hidden(true)

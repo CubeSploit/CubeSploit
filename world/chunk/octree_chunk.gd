@@ -17,8 +17,6 @@ func init(octree_node, body):
 	self.scale = octree_node.size / size
 	iterator_range = range(size) # Optimization, would have to be removed when real iterators come
 	self.octree_node = octree_node
-#	if( self.octree_node.parent):
-#		set_hidden(true)
 
 	# this allows LOD switch of chunks but the transition isn't perfect and needs to be reworked
 	if( !self.octree_node.is_leaf ):
@@ -28,29 +26,9 @@ func init(octree_node, body):
 		set_draw_range_end( 100*scale * 1000 )
 
 
-func generate_with_body_initializer( body_initializer_name ):
-	global.BODY_INITIALIZERS[body_initializer_name].initialize_chunk( body, self)
-#	thread_pool.add_task( global.BODY_INITIALIZERS[body_initializer_name], "initialize_chunk", [body, self])
-
-func generate_empty():
-	global.CHUNK_INITIALIZERS.EMPTY_INITIALIZER.initialize_chunk( self )
-	
-func generate_random( ):
-#	global.CHUNK_INITIALIZERS.RANDOM_INITIALIZER.initialize_chunk( self )
-	global.CHUNK_INITIALIZERS.RANDOM_PLAIN_INITIALIZER.initialize_chunk( self )
-
-func init_from_bellow( ):
-	global.CHUNK_INITIALIZERS.OCTREE_UPWARD_NAIVE_INITIALIZER.initialize_chunk( self )
-
-
-func get_neighbour_voxel_type ( current_voxel, direction ):
-	var neighbour_voxel = current_voxel + global.FaceDirections[direction]
-	if( neighbour_voxel[neighbour_voxel.min_axis()] < 0 || neighbour_voxel[neighbour_voxel.max_axis()] >= size ):
-		return global.VoxelTypes.EMPTY
-	return raw_data[neighbour_voxel.x][neighbour_voxel.y][neighbour_voxel.z]
-
-
-
+func initialize( chunk_initializer_name ):
+	global.CHUNK_INITIALIZERS[chunk_initializer_name].initialize_chunk( body, self)
+#	thread_pool.add_task( global.BODY_INITIALIZERS[chunk_initializer_name], "initialize_chunk", [body, self])
 
 func generate_mesh( voxel_material ):
 	if( !initialized ):
@@ -77,16 +55,9 @@ func generate_shapes( body_rid ):
 	for i in shapes_iterator_range:
 		shapes[i].add_to_body(body_rid, get_translation(), scale)
 
-#func _on_Area_body_enter_shape( body_id, body, body_shape, area_shape ):
-#	print("hey ")
-#	if body extends global.SCRIPTS.PLAYER:
-#		in_player_range = true
-#		set_hidden(false)
-#		if( octree_node.parent ):
-#			octree_node.parent.child_in_range()
-#
-#func _on_Area_body_exit_shape( body_id, body, body_shape, area_shape ):
-#	if body extends global.SCRIPTS.PLAYER:
-#		in_player_range = false
-#		if( octree_node.parent ):
-#			octree_node.parent.child_out_of_range()
+
+#func get_neighbour_voxel_type ( current_voxel, direction ):
+#	var neighbour_voxel = current_voxel + global.FaceDirections[direction]
+#	if( neighbour_voxel[neighbour_voxel.min_axis()] < 0 || neighbour_voxel[neighbour_voxel.max_axis()] >= size ):
+#		return global.VoxelTypes.EMPTY
+#	return raw_data[neighbour_voxel.x][neighbour_voxel.y][neighbour_voxel.z]

@@ -34,14 +34,6 @@ func _fixed_process(delta):
 			force[max_axis] = 20 * sign(difference[max_axis])
 			attracted_body.apply_gravity(other_position, force * delta)
 
-func generate_random_octree( body_size ):
-	octree_root = OctreeNode.new(body_size, self)
-	mass = body_size * body_size * body_size
-	
-	var shape = SphereShape.new()
-	shape.set_radius(body_size * 10)
-	gravity_area.add_shape(shape)
-	
 func init( body_size, chunk_size ):
 	self.body_size = body_size
 	self.chunk_size = chunk_size
@@ -61,12 +53,12 @@ func init( body_size, chunk_size ):
 	var body_diameter = (body_size + body_max_height * 2)
 	var body_coord_range = range(-body_diameter/2, body_diameter/2)
 	
-	octree_root.init_leaf( "DEFAULT_INITIALIZER")
+	octree_root.init_leaves("DEFAULT_INITIALIZER")
 #	thread_pool.wait_to_finish()
 #	octree_root.init_leaf_random()
 	print("leaves chunk initialized")
 
-	octree_root.init_from_bellow()
+	octree_root.init_nodes("OCTREE_UPWARD_NAIVE_INITIALIZER")
 	print("octree chunks initialized")
 	octree_root.generate_mesh()
 	print("mesches created")

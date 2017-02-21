@@ -52,15 +52,15 @@ const NOISE_ALGORITHMS = {
 	"FRACTAL_BROWNIAN_MOTION": preload('res://algorithms/noise_algorithms/fractal_brownian_motion.gd')
 }
 
-const BODY_INITIALIZERS = {
-	"DEFAULT_INITIALIZER": preload("res://world/body/body_initializers/default_initializer.gd")
-}
+const WORLD_GENERATOR = preload("res://world/world_generator.gd")
+
 const CHUNK_INITIALIZERS = {
 	"EMPTY_INITIALIZER": preload('res://world/chunk/chunk_initializers/empty_initializer.gd'),
 	"ONE_TYPE_INITIALIZER": preload('res://world/chunk/chunk_initializers/one_type_initializer.gd'),
 	"RANDOM_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_initializer.gd'),
 	"RANDOM_PLAIN_INITIALIZER": preload('res://world/chunk/chunk_initializers/random_plain_initializer.gd'),
-	"OCTREE_UPWARD_NAIVE_INITIALIZER": preload('res://world/chunk/chunk_initializers/octree_upward_naive_initializer.gd')
+	"OCTREE_UPWARD_NAIVE_INITIALIZER": preload('res://world/chunk/chunk_initializers/octree_upward_naive_initializer.gd'),
+	"DEFAULT_INITIALIZER": preload("res://world/chunk/chunk_initializers/default_initializer.gd")
 }
 
 var shape_cache = {}
