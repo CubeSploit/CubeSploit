@@ -37,7 +37,8 @@ func _fixed_process(delta):
 func init( body_size, chunk_size ):
 	self.body_size = body_size
 	self.chunk_size = chunk_size
-	
+
+func generate():
 	mass = body_size * body_size * body_size
 	var shape = SphereShape.new()
 	shape.set_radius(body_size * 10)
@@ -53,12 +54,12 @@ func init( body_size, chunk_size ):
 	var body_diameter = (body_size + body_max_height * 2)
 	var body_coord_range = range(-body_diameter/2, body_diameter/2)
 	
-	octree_root.init_leaves("DEFAULT_INITIALIZER")
+	octree_root.init_leaves("DEFAULT")
 #	thread_pool.wait_to_finish()
 #	octree_root.init_leaf_random()
 	print("leaves chunk initialized")
 
-	octree_root.init_nodes("OCTREE_UPWARD_NAIVE_INITIALIZER")
+	octree_root.init_nodes("OCTREE_UPWARD_NAIVE")
 	print("octree chunks initialized")
 	octree_root.generate_mesh()
 	print("mesches created")

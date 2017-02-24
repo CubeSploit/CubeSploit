@@ -8,5 +8,5 @@ static func generate_world( name, world_seed = 0 ):
 
 #	var world_folder = File.new()
 #	world_folder.open(world_dir.get_current_dir()+"/world.json", File.WRITE)
-
+	
 	

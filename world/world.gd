@@ -9,5 +9,4 @@ func _ready():
 	body.set_translation(Vector3(0,0,0))
 	# look good with body size 64, 16 but took 150 sec to generate
 	body.init( 8, 4 )
-	
-	global.WORLD_GENERATOR.generate_world( "world_1" )
+	body.generate()
